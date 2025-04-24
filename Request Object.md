@@ -200,6 +200,11 @@ app.post('/user/', (req, res) => {
 ### `req.cookies`
 
 Cookies can be in browser or client, but as we're using Postman, we will set and send cookies manually.
+---
+**NOTE:**
+- only client with browser support(browser client) and server can set cookie. So the client have to be browser to be able to use cookie.
+
+--- 
 
 **Setting Cookies in Postman**:
 ![Postman Cookies Setup 1](image-3.png)

@@ -7,7 +7,8 @@
 4. [Common React Development Questions](#common-react-development-questions)
 5. [Summary Diagram](#summary-diagram)
 6. [Node.js in Modern Web Development](#nodejs-in-modern-web-development)
-7. [Additional Resources for Learning Node.js](#additional-resources-for-learning-nodejs)
+7. [HTTP Request and Response Concepts](#http-request-and-response-concepts)
+8. [Additional Resources for Learning Node.js](#additional-resources-for-learning-nodejs)
 
 ## Why Do We Need Node.js for Frontend Development?
 
@@ -205,6 +206,62 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine that allo
                ▼
          [Web Browser]
 ```
+
+## HTTP Request and Response Concepts
+
+### Question
+**Who sets cookies on the client side — browser or server?**
+
+### Answer
+✅ BOTH can be involved, depending on how the cookie is set:
+
+1. **Server-side sets cookie:**
+   - The server can send a `Set-Cookie` header in the HTTP response.
+   - The browser receives it and stores it automatically.
+   - Example in an Express server:
+
+   ```js
+   res.cookie("token", "abc123", { httpOnly: true });
+   ```
+
+2. **Client-side sets cookie:**
+   - The browser can set cookies using JavaScript via `document.cookie`.
+   - Used when you want to set it manually from the frontend.
+
+   ```js
+   document.cookie = "username=Mofazzal; expires=Fri, 01 Jan 2027 12:00:00 UTC; path=/";
+   ```
+
+So, the server can tell the browser to set it, or JavaScript in the browser can set it directly.
+
+### Question
+**Can only browser clients have cookies?**
+
+### Answer
+Not necessarily! Here's the scoop:
+
+Cookies are part of the HTTP standard, so:
+
+✅ Browsers support them natively.
+
+✅ Non-browser clients (like Postman, curl, or custom HTTP clients) can receive and send cookies, but they must manually handle cookie storage and resending.
+
+Example: With fetch or axios, you'd need to handle cookies yourself or use a cookie jar.
+
+
+
+## Cookie Management Summary
+
+| Action | Who Does It |
+|--------|------------|
+| Sends cookie to client | Server via Set-Cookie header |
+| Stores cookie | Browser or custom client code |
+| Reads/modifies cookie | JavaScript in browser via document.cookie |
+
+| Client Type | Supports Cookies? | Notes |
+|-------------|-------------------|-------|
+| Browser | ✅ Yes | Automatically handles them |
+| Postman/cURL/etc. | ✅ With effort | You manage them manually or with tools |
 
 ## Additional Resources for Learning Node.js
 
