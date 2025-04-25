@@ -59,8 +59,7 @@ The Request Object guide provides detailed information on handling HTTP requests
 
 The Response Object guide covers how to send responses back to clients using Express.js.
 
-- [Request-Response Mechanism](Response%20Object.md#request-response-mechanism)
-- [Cookie Management Summary](Response%20Object.md#cookie-management-summary)
+- [Request-Response Mechanism (Visual)](Response%20Object.md#request-response-mechanism-visual)
 - [Properties](Response%20Object.md#properties)
   - [`res.app`](Response%20Object.md#resapp)
   - [`res.headersSent`](Response%20Object.md#resheaderssent)
@@ -77,8 +76,17 @@ The Response Object guide covers how to send responses back to clients using Exp
   - [`res.format()`](Response%20Object.md#resformat)
   - [`res.location()`](Response%20Object.md#reslocation)
   - [`res.redirect()`](Response%20Object.md#resredirect)
-- [Explanation with Code Examples](Response%20Object.md#explanation-with-code-examples)
-  - [`res.locals`](Response%20Object.md#reslocals)
+- [Explanation with Code](Response%20Object.md#explanation-with-code)
+  - [`res.locals` Examples](Response%20Object.md#reslocals-1)
+  - [`res.headersSent` Examples](Response%20Object.md#resheaderssent-1)
+  - [`res.end()` Examples](Response%20Object.md#resend-1)
+  - [`res.send()` Examples](Response%20Object.md#ressend-1)
+  - [`res.json()` Examples](Response%20Object.md#resjson-1)
+  - [`res.sendStatus()` Examples](Response%20Object.md#ressendstatus-1)
+  - [`res.format()` Examples](Response%20Object.md#resformat-1)
+  - [`res.cookie()` Examples](Response%20Object.md#rescookie-1)
+  - [`res.location()` Examples](Response%20Object.md#reslocation-1)
+  - [`res.redirect()` Examples](Response%20Object.md#resredirect-1)
 
 [Read the full guide](Response%20Object.md)
 
