@@ -11,7 +11,7 @@
 **Client**: Mobile, browser, Postman or anything that can make a request to the server.  
 **Server**: The Express app that is running on localhost:3000 in any server or our local machine (localhost:3000).
 
-![Client-Server Request visualization](image-1.png)
+![Client-Server Request visualization](../images/image-1.png)
 
 ## Request Properties
 
@@ -167,7 +167,7 @@ app.get('/user/:id', (req, res) => {
 - Set Content-Type to `application/json` in the Request Header
 - Body (raw): `{"name": "bangladesh"}`
 
-![Postman Body Setup](image-2.png)
+![Postman Body Setup](../images/image-2.png)
 
 **Code Example**:
 ```javascript
@@ -207,10 +207,10 @@ Cookies can be in browser or client, but as we're using Postman, we will set and
 --- 
 
 **Setting Cookies in Postman**:
-![Postman Cookies Setup 1](image-3.png)
-![Postman Cookies Setup 2](image-4.png)
-![Postman Cookies Setup 3](image-5.png)
-![Postman Cookies Setup 4](image-6.png)
+![Postman Cookies Setup 1](../images/image-3.png)
+![Postman Cookies Setup 2](../images/image-4.png)
+![Postman Cookies Setup 3](../images/image-5.png)
+![Postman Cookies Setup 4](../images/image-6.png)
 
 **Code Example**:
 ```javascript
@@ -253,7 +253,7 @@ app.post('/user/', (req, res) => {
 - `{ test_cookie: 'value' }`
 
 **After setting another cookie value**:
-![Postman with new cookie](image-7.png)
+![Postman with new cookie](../images/image-7.png)
 
 **Output**: 
 - `{"name": "Mofazzal"}`
@@ -337,7 +337,7 @@ app.get('/user/:id', (req, res) => {
 **Use-case**: Not all types of clients (mobile, desktop, etc.) accept all types of information as a response. 
 
 By default, in the Header:
-![Default Accept Header](image-8.png)
+![Default Accept Header](../images/image-8.png)
 
 The "accept" parameter is set to `*/*`, which means accept all types of response information. For example, if the accept parameter is set to `application/json`, then the client will only accept JSON response.
 

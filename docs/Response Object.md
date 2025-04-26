@@ -4,7 +4,7 @@
 - Blue arrow - request 
 - Green arrow - response
 
-![alt text](image-9.png)
+![alt text](../images/image-9.png)
 
 Only browser client can set cookies (so cookie is set in browser client, set by server through HTTP response or browser can set it manually with JS).
 Express app can also send data with the response.

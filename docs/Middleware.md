@@ -8,7 +8,7 @@ Middleware functions are functions that have access to the `request` object (`re
 
 ## Request-Response Cycle with Middleware
 
-![Request-Response Cycle](image-11.png)
+![Request-Response Cycle](../images/image-11.png)
 
 - Any middleware can call the response functionality from its own execution path and choose not to call the `next()` function if needed, thus ending the response cycle
 - Any middleware can throw an error. In that case, the `next()` function for subsequent middleware won't be called
