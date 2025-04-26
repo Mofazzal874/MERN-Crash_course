@@ -1,5 +1,23 @@
 # Response Object
 
+## Table of Contents
+- [Properties](#properties)
+  - [res.app](#resapp)
+  - [res.headersSent](#resheaderssent)
+  - [res.locals](#reslocals)
+- [Methods](#methods)
+  - [res.cookie()](#rescookie)
+  - [res.clearCookie()](#resclearcookie)
+  - [res.end()](#resend)
+  - [res.send()](#ressend)
+  - [res.json()](#resjson)
+  - [res.status()](#resstatus)
+  - [res.sendStatus()](#ressendstatus)
+  - [res.render()](#resrender)
+  - [res.format()](#resformat)
+  - [res.location()](#reslocation)
+  - [res.redirect()](#resredirect)
+
 ## Request-Response Mechanism (Visual)
 - Blue arrow - request 
 - Green arrow - response
@@ -9,56 +27,72 @@
 Only browser client can set cookies (so cookie is set in browser client, set by server through HTTP response or browser can set it manually with JS).
 Express app can also send data with the response.
 
+<a id="properties"></a>
 ## Properties
 
+<a id="resapp"></a>
 ### res.app
 - Same as req.app
 
+<a id="resheaderssent"></a>
 ### res.headersSent
 - After sending header one time, if you try to send again, it will return false 
 
+<a id="reslocals"></a>
 ### res.locals
 - For local variables
 - Local variables scoped to the Response
 - As HTTP is a stateless variable, so it is applicable or this local variables can be used only in 'views' or template engine views only
 
+<a id="methods"></a>
 ## Methods
 
+<a id="rescookie"></a>
 ### res.cookie()
 - To set cookie name to value
 
+<a id="resclearcookie"></a>
 ### res.clearCookie()
 - Clear cookies by name
 
+<a id="resend"></a>
 ### res.end()
 - End the response process
 - Disconnected with the client
 
+<a id="ressend"></a>
 ### res.send()
 - Sends the HTTP response
 - To send data with the response
 
+<a id="resjson"></a>
 ### res.json()
 - Sends a JSON response
 
+<a id="resstatus"></a>
 ### res.status()
 - To set the HTTP status
 
+<a id="ressendstatus"></a>
 ### res.sendStatus()
 - Sets the status code and also the status data will be sent to the client after ending the response
 
+<a id="resrender"></a>
 ### res.render()
 - View rendering 
 - Render a view
 
+<a id="resformat"></a>
 ### res.format()
 - In req.accepts, you can check the acceptable content-type that the client accepts
 - With res.format(), you can perform content-negotiation on the Accept HTTP header on Request object. That means it can read the content the client sends and format the response accordingly
 - Example, if the client says that it only accepts application/json content-type, res.format can read it and send response of this type
 
+<a id="reslocation"></a>
 ### res.location()
 - Set a location named header with a URL value to the response, so that the client would know where to redirect, but don't redirect
 
+<a id="resredirect"></a>
 ### res.redirect()
 - Redirect the URL derived from the specified path
 

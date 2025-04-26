@@ -1,11 +1,39 @@
 # Request Object in Express.js
 
+## Table of Contents
+- [What is Request?](#what-is-request)
+- [Visual Representation](#visual-representation)
+- [Request Properties](#request-properties)
+  - [req.baseUrl](#reqbaseurl)
+  - [req.originalUrl](#reqoriginalurl)
+  - [req.path](#reqpath)
+  - [req.params](#reqparams)
+  - [req.query](#reqquery)
+  - [req.body](#reqbody)
+  - [req.cookies](#reqcookies)
+  - [req.signedCookies](#reqsignedcookies)
+  - [req.secure](#reqsecure)
+  - [req.app](#reqapp)
+  - [req.route](#reqroute)
+- [Request Methods](#request-methods)
+  - [req.accepts(types)](#reqacceptstypes)
+  - [req.get()](#reqget)
+- [Advanced Request Object Tips](#advanced-request-object-tips-and-examples)
+  - [Testing Request Objects](#testing-request-objects)
+  - [Useful Properties and Methods](#useful-request-object-properties-and-methods)
+  - [Best Practices](#best-practices-for-request-handling)
+  - [Security Considerations](#security-considerations)
+  - [Performance Tips](#performance-tips)
+  - [Common Troubleshooting](#common-troubleshooting)
+
+<a id="what-is-request"></a>
 ## What is Request?
 
 - When a client hits a particular URL or makes an HTTP/HTTPS request through a URL to the server.
 - Represents the HTTP/HTTPS request.
 - Known as `req` (as per convention)
 
+<a id="visual-representation"></a>
 ## Visual Representation
 
 **Client**: Mobile, browser, Postman or anything that can make a request to the server.  
@@ -13,26 +41,29 @@
 
 ![Client-Server Request visualization](../images/image-1.png)
 
+<a id="request-properties"></a>
 ## Request Properties
 
-1. `req.baseUrl`
-2. `req.originalUrl`
-3. `req.path`
-4. `req.hostname` (in header object, 'Host' : 'localhost')
-5. `req.ip`
-6. `req.method` (GET, POST, PUT)
-7. `req.protocol` (HTTP/HTTPS)
-8. `req.params` (parameters in the request, as object, e.g. /user/3)
-9. `req.query` (filter=name, email)
-10. `req.body` (in POST, PUT method, we also send data in the body)
-11. `req.cookies` (if there are any cookies with the request)
-12. `req.signedCookies`
-13. `req.secure` (true if HTTPS, false if HTTP request)
-14. `req.app`
-15. `req.route`
+1. [`req.baseUrl`](#reqbaseurl)
+2. [`req.originalUrl`](#reqoriginalurl)
+3. [`req.path`](#reqpath)
+4. [`req.hostname`](#reqhostname) (in header object, 'Host' : 'localhost')
+5. [`req.ip`](#reqip)
+6. [`req.method`](#reqmethod) (GET, POST, PUT)
+7. [`req.protocol`](#reqprotocol) (HTTP/HTTPS)
+8. [`req.params`](#reqparams) (parameters in the request, as object, e.g. /user/3)
+9. [`req.query`](#reqquery) (filter=name, email)
+10. [`req.body`](#reqbody) (in POST, PUT method, we also send data in the body)
+11. [`req.cookies`](#reqcookies) (if there are any cookies with the request)
+12. [`req.signedCookies`](#reqsignedcookies)
+13. [`req.secure`](#reqsecure) (true if HTTPS, false if HTTP request)
+14. [`req.app`](#reqapp)
+15. [`req.route`](#reqroute)
 
+<a id="detailed-explanation"></a>
 ## Detailed Explanation with Code Examples
 
+<a id="reqbaseurl"></a>
 ### `req.baseUrl`
 
 #### Basic Usage
@@ -80,6 +111,7 @@ app.get('/user/:id', (req, res) => {
 - When a subapp (adminRoute) is mounted on an app (app), then the baseUrl (/admin) of that subapp (adminRoute) will be the baseUrl for all the routes (adminRoute.get()) that are using that subapp.
 - Same goes for the root app (app) here. The root app is mounted on the top. That is why, after the server URL (localhost:5000/), the baseUrl is blank for the root app (app).
 
+<a id="reqoriginalurl"></a>
 ### `req.originalUrl`
 
 ```javascript
@@ -112,6 +144,7 @@ app.get('/user/:id', (req, res) => {
 - So originalUrl is recommended for better debugging.
 - All this is important when you use subapp in the app (one or more subapp).
 
+<a id="reqpath"></a>
 ### `req.path`
 
 **Request Examples**:
@@ -120,6 +153,23 @@ app.get('/user/:id', (req, res) => {
 - If you hit `localhost:5000/user/3?filter=name`
   - **Output**: `/user/3` (path that is defined in the server routes + filters are not path, these are query parameters)
 
+<a id="reqhostname"></a>
+### `req.hostname`
+Returns the hostname from the "Host" HTTP header.
+
+<a id="reqip"></a>
+### `req.ip`
+Returns the remote IP address of the request.
+
+<a id="reqmethod"></a>
+### `req.method`
+Returns the HTTP method of the request (GET, POST, PUT, etc.)
+
+<a id="reqprotocol"></a>
+### `req.protocol`
+Returns the protocol of the request (http or https).
+
+<a id="reqparams"></a>
 ### `req.params`
 
 This will return the object which is a parameter in the URL.
@@ -143,6 +193,7 @@ console.log(req.params.id)
 ```
 It will show `3` in the console.
 
+<a id="reqquery"></a>
 ### `req.query`
 
 It doesn't concern with parameter (id), it's concerned with the query parameter in the URL.
@@ -160,6 +211,7 @@ app.get('/user/:id', (req, res) => {
 **Output**: 
 - `{ filter: 'name' }`
 
+<a id="reqbody"></a>
 ### `req.body`
 
 **Request Setup**:
@@ -197,6 +249,7 @@ app.post('/user/', (req, res) => {
 **Output After Adding Parser**: 
 - `{"name": "bangladesh"}`
 
+<a id="reqcookies"></a>
 ### `req.cookies`
 
 Cookies can be in browser or client, but as we're using Postman, we will set and send cookies manually.
@@ -258,14 +311,17 @@ app.post('/user/', (req, res) => {
 **Output**: 
 - `{"name": "Mofazzal"}`
 
+<a id="reqsignedcookies"></a>
 ### `req.signedCookies`
 
 If you use cryptographically secured cookies that cannot be tampered with, then these are called signed cookies.
 
+<a id="reqsecure"></a>
 ### `req.secure`
 
 Returns `true` if HTTPS, `false` if HTTP.
 
+<a id="reqapp"></a>
 ### `req.app`
 
 Instead of doing everything in one file, you might want to do some functionalities in another file called handler.js and use the app object in that file. How will you access the app object in handler.js file?
@@ -312,6 +368,7 @@ export default handle;
 **Browser Response**: 
 - `Welcome to My Modular App (v1.0.0)`
 
+<a id="reqroute"></a>
 ### `req.route`
 
 Gives all the information about a route.
@@ -327,11 +384,13 @@ app.get('/user/:id', (req, res) => {
 }); 
 ```
 
+<a id="request-methods"></a>
 ## Request Methods
 
-1. `req.accepts(types)`
-2. `req.get()`
+1. [`req.accepts(types)`](#reqacceptstypes)
+2. [`req.get()`](#reqget)
 
+<a id="reqacceptstypes"></a>
 ### `req.accepts(types)`
 
 **Use-case**: Not all types of clients (mobile, desktop, etc.) accept all types of information as a response. 
@@ -359,6 +418,7 @@ app.get('/user', (req, res) => {
 })
 ```
 
+<a id="reqget"></a>
 ### `req.get()`
 
 Used to get information about the headers.
@@ -372,8 +432,10 @@ app.get('/user', (req, res) => {
 **Output**: 
 - `application/json` (or any value that you've set)
 
+<a id="advanced-request-object-tips-and-examples"></a>
 ## Advanced Request Object Tips and Examples
 
+<a id="testing-request-objects"></a>
 ### Testing Request Objects
 
 When developing with Express.js, properly testing request handling is crucial. Here are some practical approaches:
@@ -443,8 +505,10 @@ describe('POST /user', () => {
 });
 ```
 
+<a id="useful-request-object-properties-and-methods"></a>
 ### Useful Request Object Properties and Methods
 
+<a id="reqxhr"></a>
 #### `req.xhr` - Detect AJAX Requests
 
 ```javascript
@@ -458,6 +522,7 @@ app.get('/data', (req, res) => {
 });
 ```
 
+<a id="reqsubdomains"></a>
 #### `req.subdomains` - Access Subdomains
 
 Useful for routing based on subdomain:
@@ -475,6 +540,7 @@ app.get('/', (req, res) => {
 });
 ```
 
+<a id="reqis"></a>
 #### `req.is()` - Content Type Checking
 
 Check if the request's Content-Type matches a given type:
@@ -491,8 +557,10 @@ app.post('/upload', (req, res) => {
 });
 ```
 
+<a id="best-practices-for-request-handling"></a>
 ### Best Practices for Request Handling
 
+<a id="validate-request-data"></a>
 #### Validate Request Data
 
 Always validate incoming request data to prevent security issues:
@@ -519,6 +587,7 @@ app.post('/user',
 );
 ```
 
+<a id="handle-file-uploads"></a>
 #### Handle File Uploads with Multer
 
 ```javascript
@@ -539,6 +608,7 @@ app.post('/profile', upload.single('avatar'), (req, res) => {
 });
 ```
 
+<a id="debugging-request-objects"></a>
 #### Debugging Request Objects
 
 Add this middleware to log all incoming requests during development:
@@ -556,8 +626,10 @@ app.use((req, res, next) => {
 });
 ```
 
+<a id="security-considerations"></a>
 ### Security Considerations
 
+<a id="using-helmet-for-secure-headers"></a>
 #### Using Helmet for Secure Headers
 
 ```javascript
@@ -567,6 +639,7 @@ app.use(helmet());
 
 This adds various HTTP headers to help protect against common attacks.
 
+<a id="rate-limiting"></a>
 #### Rate Limiting to Prevent Abuse
 
 ```javascript
@@ -582,6 +655,7 @@ const apiLimiter = rateLimit({
 app.use('/api/', apiLimiter);
 ```
 
+<a id="cors-configuration"></a>
 #### CORS Configuration for API Security
 
 ```javascript
@@ -599,8 +673,10 @@ app.use(cors({
 }));
 ```
 
+<a id="performance-tips"></a>
 ### Performance Tips
 
+<a id="using-compression-middleware"></a>
 #### Using Compression Middleware
 
 Compress response bodies for improved performance:
@@ -610,6 +686,7 @@ const compression = require('compression');
 app.use(compression());
 ```
 
+<a id="request-caching-strategies"></a>
 #### Request Caching Strategies
 
 ```javascript
@@ -632,6 +709,7 @@ app.get('/api/products', (req, res) => {
 });
 ```
 
+<a id="handling-large-request-bodies"></a>
 #### Handling Large Request Bodies
 
 When dealing with large request bodies, consider increasing the limit:
@@ -643,8 +721,10 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 However, for file uploads, Multer with limits is a safer option as shown earlier.
 
+<a id="common-troubleshooting"></a>
 ### Common Troubleshooting
 
+<a id="reqbody-is-undefined"></a>
 #### req.body is undefined
 
 Check that:
@@ -663,6 +743,7 @@ app.use('/api', apiRoutes);
 app.use(express.json());
 ```
 
+<a id="cookies-not-being-received"></a>
 #### Cookies Not Being Received
 
 Ensure cookie-parser is configured correctly:
