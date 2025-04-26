@@ -15,12 +15,18 @@ Welcome to the MERN (MongoDB, Express.js, React.js, Node.js) Crash Course docume
 
 The Setup and Application Object guide covers the fundamentals of setting up an Express.js application.
 
-- [What is Express.js?](Setup%20and%20Application%20Object.md)
-- [Installation and Setup](Setup%20and%20Application%20Object.md)
-- [Application Object](Setup%20and%20Application%20Object.md)
-- [Configuring Your Express App](Setup%20and%20Application%20Object.md)
-- [Environment Configuration](Setup%20and%20Application%20Object.md)
-- [Server Setup](Setup%20and%20Application%20Object.md)
+- [Project Setup](Setup%20and%20Application%20Object.md#project-setup)
+- [Application Object](Setup%20and%20Application%20Object.md#application-object)
+- [Express Methods](Setup%20and%20Application%20Object.md#express-methods)
+  - [`app.all()`](Setup%20and%20Application%20Object.md#appall)
+  - [`app.listen()`](Setup%20and%20Application%20Object.md#applisten)
+  - [`app.param()`](Setup%20and%20Application%20Object.md#appparam)
+  - [`app.route()`](Setup%20and%20Application%20Object.md#approute)
+  - [`app.engine()`](Setup%20and%20Application%20Object.md#appengine)
+- [Middleware](Setup%20and%20Application%20Object.md#middleware)
+- [Request & Response](Setup%20and%20Application%20Object.md#request--response)
+- [Error Handling](Setup%20and%20Application%20Object.md#error-handling)
+- [Tips & Tricks](Setup%20and%20Application%20Object.md#tips--tricks)
 
 [Read the full guide](Setup%20and%20Application%20Object.md)
 
@@ -34,6 +40,10 @@ The Request Object guide provides detailed information on handling HTTP requests
   - [`req.baseUrl`](Request%20Object.md#reqbaseurl)
   - [`req.originalUrl`](Request%20Object.md#reqoriginalurl)
   - [`req.path`](Request%20Object.md#reqpath)
+  - [`req.hostname`](Request%20Object.md#reqhostname)
+  - [`req.ip`](Request%20Object.md#reqip)
+  - [`req.method`](Request%20Object.md#reqmethod)
+  - [`req.protocol`](Request%20Object.md#reqprotocol)
   - [`req.params`](Request%20Object.md#reqparams)
   - [`req.query`](Request%20Object.md#reqquery)
   - [`req.body`](Request%20Object.md#reqbody)
@@ -94,17 +104,20 @@ The Response Object guide covers how to send responses back to clients using Exp
 
 The Middleware guide explains how middleware functions work in Express.js applications.
 
-- [What is Middleware?](Middleware.md)
-- [Types of Middleware](Middleware.md)
-  - [Application-level Middleware](Middleware.md)
-  - [Router-level Middleware](Middleware.md)
-  - [Error-handling Middleware](Middleware.md)
-  - [Built-in Middleware](Middleware.md)
-  - [Third-party Middleware](Middleware.md)
-- [Creating Custom Middleware](Middleware.md)
-- [Middleware Execution Order](Middleware.md)
-- [Common Middleware Patterns](Middleware.md)
-- [Best Practices](Middleware.md)
+- [What is Middleware?](Middleware.md#what-is-middleware)
+- [Request-Response Cycle with Middleware](Middleware.md#request-response-cycle-with-middleware)
+- [The `next()` Function](Middleware.md#the-next-function)
+- [What Can Middleware Do?](Middleware.md#what-can-middleware-do)
+- [Types of Middleware in Express](Middleware.md#types-of-middleware-in-express)
+- [Middleware Examples](Middleware.md#middleware-examples)
+  - [Application-level Middleware](Middleware.md#1-application-level-middleware)
+    - [Basic Middleware](Middleware.md#example-1-basic-middleware)
+    - [Multiple Middleware](Middleware.md#example-2-multiple-middleware)
+    - [Logger Middleware](Middleware.md#example-3-logger-middleware)
+  - [Router-level Middleware](Middleware.md#2-router-level-middleware)
+  - [Third-party Middleware](Middleware.md#3-third-party-middleware)
+  - [Error-handling Middleware](Middleware.md#4-error-handling-middleware)
+  - [Configurable Middleware](Middleware.md#5-configurable-middleware)
 
 [Read the full guide](Middleware.md)
 
@@ -112,14 +125,14 @@ The Middleware guide explains how middleware functions work in Express.js applic
 
 The Error Handling guide covers techniques for handling errors in Express.js applications.
 
-- [Error Handling Basics](Error%20Handling.md)
-- [Default Error Handler](Error%20Handling.md)
-- [Custom Error Handlers](Error%20Handling.md)
-- [Asynchronous Error Handling](Error%20Handling.md)
-- [Error Handling Middleware](Error%20Handling.md)
-- [Handling 404 Errors](Error%20Handling.md)
-- [Production vs Development Error Handling](Error%20Handling.md)
-- [Best Practices](Error%20Handling.md)
+- [Error Handling Basics](Error%20Handling.md#error-handling-basics)
+- [Default Error Handler](Error%20Handling.md#default-error-handler)
+- [Custom Error Handlers](Error%20Handling.md#custom-error-handlers)
+- [Asynchronous Error Handling](Error%20Handling.md#asynchronous-error-handling)
+- [Error Handling Middleware](Error%20Handling.md#error-handling-middleware)
+- [Handling 404 Errors](Error%20Handling.md#handling-404-errors)
+- [Production vs Development Error Handling](Error%20Handling.md#production-vs-development-error-handling)
+- [Best Practices](Error%20Handling.md#best-practices)
 
 [Read the full guide](Error%20Handling.md)
 
@@ -127,16 +140,47 @@ The Error Handling guide covers techniques for handling errors in Express.js app
 
 This section includes common questions and answers about Node.js development.
 
-- [Core Concepts](Some%20Questions%20and%20Answer%20on%20Nodejs.md)
-- [Asynchronous Programming](Some%20Questions%20and%20Answer%20on%20Nodejs.md)
-- [Modules and Packages](Some%20Questions%20and%20Answer%20on%20Nodejs.md)
-- [Event Loop](Some%20Questions%20and%20Answer%20on%20Nodejs.md)
-- [Streams and Buffers](Some%20Questions%20and%20Answer%20on%20Nodejs.md)
-- [Performance Optimization](Some%20Questions%20and%20Answer%20on%20Nodejs.md)
-- [Debugging Techniques](Some%20Questions%20and%20Answer%20on%20Nodejs.md)
-- [Common Patterns](Some%20Questions%20and%20Answer%20on%20Nodejs.md)
+- [Why Do We Need Node.js for Frontend Development?](Some%20Questions%20and%20Answer%20on%20Nodejs.md#why-do-we-need-nodejs-for-frontend-development)
+- [The Role of bundle.js in React Applications](Some%20Questions%20and%20Answer%20on%20Nodejs.md#the-role-of-bundlejs-in-react-applications)
+- [Development vs. Production Mode](Some%20Questions%20and%20Answer%20on%20Nodejs.md#development-vs-production-mode)
+- [Common React Development Questions](Some%20Questions%20and%20Answer%20on%20Nodejs.md#common-react-development-questions)
+- [Node.js in Modern Web Development](Some%20Questions%20and%20Answer%20on%20Nodejs.md#nodejs-in-modern-web-development)
+  - [What is Node.js?](Some%20Questions%20and%20Answer%20on%20Nodejs.md#what-is-nodejs)
+  - [Key Features of Node.js](Some%20Questions%20and%20Answer%20on%20Nodejs.md#key-features-of-nodejs)
+  - [Node.js vs. Browser JavaScript](Some%20Questions%20and%20Answer%20on%20Nodejs.md#nodejs-vs-browser-javascript)
+  - [Common Use Cases for Node.js](Some%20Questions%20and%20Answer%20on%20Nodejs.md#common-use-cases-for-nodejs)
+  - [Node.js in the Development Workflow](Some%20Questions%20and%20Answer%20on%20Nodejs.md#nodejs-in-the-development-workflow)
+- [HTTP Request and Response Concepts](Some%20Questions%20and%20Answer%20on%20Nodejs.md#http-request-and-response-concepts)
 
 [Read the full guide](Some%20Questions%20and%20Answer%20on%20Nodejs.md)
+
+## Interactive Learning Path
+
+For the best learning experience, we recommend following this documentation in sequence:
+
+1. Start with [Setup and Application Object](Setup%20and%20Application%20Object.md) to understand the basics
+2. Explore the [Request Object](Request%20Object.md) to learn how Express handles incoming requests
+3. Continue with the [Response Object](Response%20Object.md) to see how Express sends back data
+4. Dive into [Middleware](Middleware.md) to understand the core concept that powers Express
+5. Learn about [Error Handling](Error%20Handling.md) to make your applications robust
+6. Review [Node.js Questions and Answers](Some%20Questions%20and%20Answer%20on%20Nodejs.md) for deeper insights
+
+## Visual Learning Aids
+
+Throughout the documentation, you'll find visual aids to help understand concepts:
+
+- [Client-Server Request visualization](Request%20Object.md#visual-representation) (Request Object)
+- [Request-Response Cycle with Middleware](Middleware.md#request-response-cycle-with-middleware) (Middleware)
+- [Node.js Development Workflow](Some%20Questions%20and%20Answer%20on%20Nodejs.md#nodejs-in-the-development-workflow) (Node.js Q&A)
+
+## Code Examples
+
+All guides include practical code examples that demonstrate:
+
+- Basic usage patterns
+- Common implementation scenarios
+- Best practices
+- Troubleshooting techniques
 
 ## Additional Resources
 
@@ -144,6 +188,9 @@ This section includes common questions and answers about Node.js development.
 - [Express.js Documentation](https://expressjs.com/)
 - [React.js Documentation](https://reactjs.org/docs/getting-started.html)
 - [Node.js Documentation](https://nodejs.org/en/docs/)
+- [MDN Web Docs on HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
+- [JWT Authentication](https://jwt.io/introduction/)
+- [REST API Design Best Practices](https://restfulapi.net/)
 
 ## Project Structure
 
@@ -172,10 +219,13 @@ To get started with the MERN stack, follow these steps:
 6. Start the frontend application with `npm run client`
 7. For concurrent development, use `npm run dev`
 
-## Contributors
+## Quick Reference Cards
 
-- Your Name/Organization
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+| Express Component | Primary Use | Documentation Link |
+|-------------------|-------------|-------------------|
+| Application Object | Configure and set up Express app | [View Guide](Setup%20and%20Application%20Object.md#application-object) |
+| Request Object | Handle incoming HTTP requests | [View Guide](Request%20Object.md) |
+| Response Object | Send data back to clients | [View Guide](Response%20Object.md) |
+| Middleware | Process requests between endpoints | [View Guide](Middleware.md) |
+| Routing | Define application endpoints | [View Guide](Setup%20and%20Application%20Object.md#express-methods) |
+| Error Handling | Handle exceptions gracefully | [View Guide](Error%20Handling.md) |
