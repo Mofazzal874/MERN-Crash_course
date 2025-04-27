@@ -5,10 +5,11 @@
 2. [The Role of bundle.js in React Applications](#the-role-of-bundlejs-in-react-applications)
 3. [Development vs. Production Mode](#development-vs-production-mode)
 4. [Common React Development Questions](#common-react-development-questions)
-5. [Summary Diagram](#summary-diagram)
-6. [Node.js in Modern Web Development](#nodejs-in-modern-web-development)
-7. [HTTP Request and Response Concepts](#http-request-and-response-concepts)
-8. [Additional Resources for Learning Node.js](#additional-resources-for-learning-nodejs)
+5. [JavaScript Module Exports](#javascript-module-exports)
+6. [Summary Diagram](#summary-diagram)
+7. [Node.js in Modern Web Development](#nodejs-in-modern-web-development)
+8. [HTTP Request and Response Concepts](#http-request-and-response-concepts)
+9. [Additional Resources for Learning Node.js](#additional-resources-for-learning-nodejs)
 
 ## Why Do We Need Node.js for Frontend Development?
 
@@ -126,6 +127,8 @@ When you run `npm run build`:
 6. Processes and optimizes assets (images, fonts, etc.)
 7. Generates source maps for debugging (if configured)
 
+
+<a id="summary-diagram"></a>
 ## Summary Diagram
 
 ```
@@ -248,8 +251,6 @@ Cookies are part of the HTTP standard, so:
 
 Example: With fetch or axios, you'd need to handle cookies yourself or use a cookie jar.
 
-
-
 ## Cookie Management Summary
 
 | Action | Who Does It |
@@ -262,6 +263,112 @@ Example: With fetch or axios, you'd need to handle cookies yourself or use a coo
 |-------------|-------------------|-------|
 | Browser | ✅ Yes | Automatically handles them |
 | Postman/cURL/etc. | ✅ With effort | You manage them manually or with tools |
+
+
+
+
+
+<a id="javascript-module-exports"></a>
+## JavaScript Module Exports
+
+<a id="export-vs-export-default"></a>
+### Question: When to use export vs export default?
+
+#### Answer
+The choice between `export` and `export default` depends on your module structure:
+
+1. **Use `export` when:**
+   - You're exporting multiple items from a file
+   - You want to enforce the exact names when importing (using braces `{}`)
+
+2. **Use `export default` when:**
+   - You're exporting only one main object/function/class from a file
+   - You want to allow importers to rename the export freely
+
+#### Named Exports (`export`)
+
+```javascript
+// file: config.js
+export const dbConfig = {
+  host: 'localhost',
+  port: 27017
+};
+
+export const serverConfig = {
+  port: 5000
+};
+```
+
+When importing named exports, you **must** use curly braces and the exact names:
+
+```javascript
+// file: app.js
+import { dbConfig, serverConfig } from './config.js';
+
+console.log(dbConfig.host);    // 'localhost'
+console.log(serverConfig.port); // 5000
+```
+
+#### Default Export (`export default`)
+
+```javascript
+// file: config.js
+const config = {
+  dbHost: 'localhost',
+  dbPort: 27017,
+  serverPort: 5000
+};
+
+export default config;
+```
+
+When importing a default export, you:
+- Don't use curly braces `{}`
+- Can name the import anything you want
+
+```javascript
+// file: app.js
+import config from './config.js';
+console.log(config.dbHost); // 'localhost'
+
+// OR rename it as you wish
+import myConfig from './config.js';
+console.log(myConfig.dbPort); // 27017
+```
+
+#### Mixing Both Export Types
+
+You can use both approaches in the same file:
+
+```javascript
+// file: utils.js
+export const formatDate = (date) => {
+  // Date formatting logic
+};
+
+export const validateEmail = (email) => {
+  // Email validation logic
+};
+
+// Default export for the main function
+const calculateTotal = (items) => {
+  // Calculation logic
+};
+
+export default calculateTotal;
+```
+
+Then import them like this:
+
+```javascript
+import calculateTotal, { formatDate, validateEmail } from './utils.js';
+```
+
+#### Best Practices
+
+- For libraries/modules with multiple utilities, use named exports
+- For components or classes representing a single concept, use default exports
+- Be consistent in your codebase to improve readability
 
 ## Additional Resources for Learning Node.js
 

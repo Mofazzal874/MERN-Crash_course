@@ -16,6 +16,10 @@ Welcome to the MERN (MongoDB, Express.js, React.js, Node.js) Crash Course docume
 The Setup and Application Object guide covers the fundamentals of setting up an Express.js application.
 
 - [Project Setup](docs/Setup%20and%20Application%20Object.md#project-setup)
+- [MongoDB Database Setup](docs/Setup%20and%20Application%20Object.md#mongodb-database-setup)
+  - [Creating Connection String](docs/Setup%20and%20Application%20Object.md#create-connection-string)
+  - [NoSQL Database Structure](docs/Setup%20and%20Application%20Object.md#nosql-database-structure)
+  - [Creating Data Models](docs/Setup%20and%20Application%20Object.md#creating-data-models)
 - [Application Object](docs/Setup%20and%20Application%20Object.md#application-object)
 - [Express Methods](docs/Setup%20and%20Application%20Object.md#express-methods)
   - [`app.all()`](docs/Setup%20and%20Application%20Object.md#appall)
@@ -144,6 +148,8 @@ This section includes common questions and answers about Node.js development.
 - [The Role of bundle.js in React Applications](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#the-role-of-bundlejs-in-react-applications)
 - [Development vs. Production Mode](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#development-vs-production-mode)
 - [Common React Development Questions](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#common-react-development-questions)
+- [JavaScript Module Exports](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#javascript-module-exports)
+  - [Export vs Export Default](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#export-vs-export-default)
 - [Node.js in Modern Web Development](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#nodejs-in-modern-web-development)
   - [What is Node.js?](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#what-is-nodejs)
   - [Key Features of Node.js](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#key-features-of-nodejs)

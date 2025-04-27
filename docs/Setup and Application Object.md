@@ -5,18 +5,20 @@ A comprehensive guide for setting up and using Express.js in a MERN stack applic
 ## Table of Contents
 
 1. [Project Setup](#project-setup)
-2. [Application Object](#application-object)
-3. [Express Methods](#express-methods)
+2. [MongoDB Database Setup](#mongodb-database-setup)
+3. [Application Object](#application-object)
+4. [Express Methods](#express-methods)
    - [app.all()](#appall)
    - [app.listen()](#applisten)
    - [app.param()](#appparam)
    - [app.route()](#approute)
    - [app.engine()](#appengine)
-4. [Middleware](#middleware)
-5. [Request & Response](#request--response)
-6. [Error Handling](#error-handling)
-7. [Tips & Tricks](#tips--tricks)
+5. [Middleware](#middleware)
+6. [Request & Response](#request--response)
+7. [Error Handling](#error-handling)
+8. [Tips & Tricks](#tips--tricks)
 
+<a id="project-setup"></a>
 ## Project Setup
 
 - Initialize the project in the main root folder (not in the backend or frontend)
@@ -55,6 +57,115 @@ A comprehensive guide for setting up and using Express.js in a MERN stack applic
   "dev" : "nodemon backend/server.js"
   ```
 
+<a id="mongodb-database-setup"></a>
+## MongoDB Database Setup
+
+Setting up the MongoDB database with mongoose:
+
+### Create Connection String
+
+1. Create a MongoDB connection string and copy the database user password
+2. Place the connection string in your `.env` file as `MONGO_URI`
+
+### Configure Database Name
+
+Set the database name in your MongoDB connection string:
+- Locate the part in your connection string before the `?` mark
+- Add your database name:
+  ```
+  ___________@cluster0.badfsf.mongodb.net/products?_________
+  ```
+
+### Set Network Access
+
+1. Go to MongoDB Atlas → Security → Network Access 
+2. You'll see your IP listed
+3. Add IP address → Allow access from anywhere (this sets the access list entry to `0.0.0.0/0`)
+
+### Access MongoDB in Your Application
+
+To use the MongoDB URI stored in your `.env` file:
+
+```javascript
+import dotenv from 'dotenv';
+dotenv.config();
+
+console.log(process.env.MONGO_URI);
+```
+
+### Create Database Connection Module
+
+Create a `config/db.js` file in your backend directory:
+
+```javascript
+import mongoose from "mongoose";
+import dotenv from "dotenv"; 
+
+dotenv.config(); 
+
+export const connectDB = async () => {
+    try {
+        const conn = await mongoose.connect(process.env.MONGO_URI); 
+        console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (error) {
+        console.error(`Error: ${error.message}`); 
+        process.exit(1); // process code 1 means exit with failure, 0 means success
+    }
+}
+```
+
+<a id="nosql-database-structure"></a>
+### NoSQL Database Structure
+
+![NoSQL Database Structure](../images/image12.png)
+
+<a id="creating-data-models"></a>
+### Creating Data Models
+
+Create a product model in `models/product.model.js`:
+
+```javascript
+import mongoose from 'mongoose'; 
+
+const productSchema = new mongoose.Schema({
+    name: {
+        type: String, 
+        required: true
+    }, 
+    price: {
+        type: Number, 
+        required: true
+    }, 
+    image: {
+        type: String,
+        required: true
+    },
+}, {
+    timestamps: true // automatically adds createdAt, updatedAt fields
+}); 
+
+const Product = mongoose.model('Product', productSchema); 
+export default Product; 
+```
+
+
+---
+#### Important Notes on Mongoose Models:
+
+- In the model creation line: `const Product = mongoose.model('Product', productSchema)`
+  - The 'Product' string tells Mongoose to create a model called 'Product'
+  - Mongoose will automatically use a plural, lowercase collection name ('products') in MongoDB
+  - You specify the schema this model should follow (productSchema)
+  
+- We use `export default Product` since we're exporting only one object from this file
+
+- The `timestamps: true` option automatically adds:
+  - `createdAt` field - set when document is created
+  - `updatedAt` field - updated whenever document is modified
+
+<a id="application-object"></a>
+
+---
 ## Application Object
 
 Creating multiple app within a app or sub-app
@@ -408,3 +519,7 @@ app.get('/users/:id', (req, res, next) => {
      res.send('Home');
    });
    ```
+
+
+
+

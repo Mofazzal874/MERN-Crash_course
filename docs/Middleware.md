@@ -1,5 +1,21 @@
 # Express Middleware
 
+## Table of Contents
+- [What is Middleware?](#what-is-middleware)
+- [Request-Response Cycle with Middleware](#request-response-cycle-with-middleware)
+- [The `next()` Function](#the-next-function)
+- [What Can Middleware Do?](#what-can-middleware-do)
+- [Types of Middleware in Express](#types-of-middleware-in-express)
+- [Middleware Examples](#middleware-examples)
+  - [Application-level Middleware](#1-application-level-middleware)
+    - [Basic Middleware](#example-1-basic-middleware)
+    - [Multiple Middleware](#example-2-multiple-middleware)
+    - [Logger Middleware](#example-3-logger-middleware)
+  - [Router-level Middleware](#2-router-level-middleware)
+  - [Third-party Middleware](#3-third-party-middleware)
+  - [Error-handling Middleware](#4-error-handling-middleware)
+  - [Configurable Middleware](#5-configurable-middleware)
+
 ## What is Middleware?
 Middleware functions are functions that have access to the `request` object (`req`), the `response` object (`res`), and the `next` function in the Express application's request-response cycle.
 
