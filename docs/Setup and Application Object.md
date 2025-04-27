@@ -60,43 +60,48 @@ A comprehensive guide for setting up and using Express.js in a MERN stack applic
 <a id="mongodb-database-setup"></a>
 ## MongoDB Database Setup
 
-Setting up the MongoDB database with mongoose:
+Now setting up the database: (mongoose is already installed)
 
+<a id="create-connection-string"></a>
 ### Create Connection String
 
-1. Create a MongoDB connection string and copy the database user password
-2. Place the connection string in your `.env` file as `MONGO_URI`
+1. Create a MongoDB connection string and copy the database user password and place it in .env file
+2. Name the database in the cluster string:
+   - In the connection string, before the ? mark, set the db name 
+   ```
+   ___________@cluster0.badfsf.mongodb.net/?_________
+   ```
+   - Write the db name as products 
+   ```
+   ___________@cluster0.badfsf.mongodb.net/products?_________
+   ```
 
-### Configure Database Name
-
-Set the database name in your MongoDB connection string:
-- Locate the part in your connection string before the `?` mark
-- Add your database name:
-  ```
-  ___________@cluster0.badfsf.mongodb.net/products?_________
-  ```
-
+<a id="set-network-access"></a>
 ### Set Network Access
 
-1. Go to MongoDB Atlas → Security → Network Access 
-2. You'll see your IP listed
-3. Add IP address → Allow access from anywhere (this sets the access list entry to `0.0.0.0/0`)
+- Now go to Security -> Network Access -> you'll see your IP as listed 
+  - Now add IP address -> allow access from anywhere (which will make the access list entry to 0.0.0.0/0) 
 
+<a id="access-mongodb"></a>
 ### Access MongoDB in Your Application
 
-To use the MongoDB URI stored in your `.env` file:
+- But you can't access it from the server.js or any other files (that is why we installed dotenv)
+- To use the mongo_uri in the .env file, use
+  `import dotenv from "dotenv";`
+  and then you can use it. To see this in the console with server.js:
 
 ```javascript
 import dotenv from 'dotenv';
 dotenv.config();
-
 console.log(process.env.MONGO_URI);
 ```
 
+Console output: mongodb url from the .env file 
+
+<a id="create-database-connection"></a>
 ### Create Database Connection Module
 
-Create a `config/db.js` file in your backend directory:
-
+- Now create a config/db.js in the backend directory:
 ```javascript
 import mongoose from "mongoose";
 import dotenv from "dotenv"; 
@@ -122,7 +127,7 @@ export const connectDB = async () => {
 <a id="creating-data-models"></a>
 ### Creating Data Models
 
-Create a product model in `models/product.model.js`:
+- Now we will create a product model in models/product.model.js (.model is just a convention, file is still just a js file. You can also follow the Product.js convention to create schema)
 
 ```javascript
 import mongoose from 'mongoose'; 
@@ -141,31 +146,25 @@ const productSchema = new mongoose.Schema({
         required: true
     },
 }, {
-    timestamps: true // automatically adds createdAt, updatedAt fields
+    timestamps: true // createdAt, updatedAt
 }); 
 
 const Product = mongoose.model('Product', productSchema); 
 export default Product; 
 ```
 
-
----
 #### Important Notes on Mongoose Models:
 
-- In the model creation line: `const Product = mongoose.model('Product', productSchema)`
-  - The 'Product' string tells Mongoose to create a model called 'Product'
-  - Mongoose will automatically use a plural, lowercase collection name ('products') in MongoDB
-  - You specify the schema this model should follow (productSchema)
+- In the last two lines:
+  `const Product = mongoose.model('Product', productSchema);` 
+  - This is saying to mongoose that you should create a model called 'Product', which will follow this `productSchema` structure/schema and you should assign it to an object called Product. You should write the 'Product' in the model() function like this - first letter uppercase and the word is singular. MongoDB will make it - products or you can say - lowercase and plural. You can see the database collection as `products` in the mongodb cloud.
   
-- We use `export default Product` since we're exporting only one object from this file
-
-- The `timestamps: true` option automatically adds:
-  - `createdAt` field - set when document is created
-  - `updatedAt` field - updated whenever document is modified
+  `export default Product;` 
+  - As we're exporting only one object Product from this file.
+  
+- The `timestamps: true` option will automatically keep createdAt and updatedAt data
 
 <a id="application-object"></a>
-
----
 ## Application Object
 
 Creating multiple app within a app or sub-app
@@ -184,8 +183,10 @@ app.use('/admin', admin) // mount the sub app
 admin.use('/dbadmin' , dbAdmin) ; 
 ```
 
+<a id="express-methods"></a>
 ## Express Methods
 
+<a id="appall"></a>
 ### app.all()
 
 To hit all the methods(GET, POST, PUT, DELETE) for a particular route
@@ -197,10 +198,12 @@ app.all('/secret', (req, res, next) => {
 })
 ```
 
+<a id="applisten"></a>
 ### app.listen()
 
 To listen on a port
 
+<a id="appparam"></a>
 ### app.param()
 
 Format -> app.param(name, callback)
@@ -258,6 +261,7 @@ app.get('/user/:id' , (req, res)=>{
 }) ; 
 ```
 
+<a id="approute"></a>
 ### app.route()
 
 Format: app.route(path)
@@ -291,6 +295,7 @@ app.route('/about/mission')
     })
 ```
 
+<a id="appengine"></a>
 ### app.engine()
 
 - Using template engine(responsing a html template as response)
@@ -308,6 +313,7 @@ app.get('/' , (req, res)=>{
 
 In the views folder, you can create sub-folder. In that case you have to send like this - dirname/index, dirname/about etc.
 
+<a id="middleware"></a>
 ## Middleware
 
 Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function in the application's request-response cycle. These functions can:
@@ -315,7 +321,7 @@ Middleware functions are functions that have access to the request object (req),
 - Execute any code
 - Make changes to the request and response objects
 - End the request-response cycle
-- Call the next middleware in the stack
+-Call the next middleware in the stack
 
 Example of a custom middleware:
 
@@ -348,6 +354,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 ```
 
+<a id="request--response"></a>
 ## Request & Response
 
 ### Request Object
@@ -402,6 +409,7 @@ res.render('profile', { user: userObject });
 res.download('/path/to/file.pdf');
 ```
 
+<a id="error-handling"></a>
 ## Error Handling
 
 Express comes with a built-in error handler that deals with any errors that might be encountered in the app. The default error handling middleware is added at the end of the middleware stack.
@@ -432,6 +440,7 @@ app.get('/users/:id', (req, res, next) => {
 });
 ```
 
+<a id="tips--tricks"></a>
 ## Tips & Tricks
 
 1. **Environment Variables**
