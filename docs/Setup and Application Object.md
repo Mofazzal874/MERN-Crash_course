@@ -4,9 +4,13 @@ A comprehensive guide for setting up and using Express.js in a MERN stack applic
 
 ## Table of Contents
 
-1. [Project Setup](#project-setup)
+1. ### [Project Setup](#project-setup)
+    - [Backend Setup](#backend-setup)
+    - [Frontend Setup](#frontend-setup)
 2. [MongoDB Database Setup](#mongodb-database-setup)
-3. [Application Object](#application-object)
+3. [Project Modularization](#modularizing-project)
+  <br><br>
+3. ### [Application Object](#application-object)
 4. [Express Methods](#express-methods)
    - [app.all()](#appall)
    - [app.listen()](#applisten)
@@ -21,6 +25,7 @@ A comprehensive guide for setting up and using Express.js in a MERN stack applic
 <a id="project-setup"></a>
 ## Project Setup
 
+
 - Initialize the project in the main root folder (not in the backend or frontend)
   ```bash
   npm init -y
@@ -31,6 +36,9 @@ A comprehensive guide for setting up and using Express.js in a MERN stack applic
   npm install express mongoose dotenv
   ```
   (express for web framework and routing)
+
+<a id="backend-setup"></a>
+# Backend Setup 
 
 - Create server.js in the backend folder (the main entry point of our app)
 
