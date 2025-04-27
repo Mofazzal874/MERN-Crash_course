@@ -164,6 +164,219 @@ export default Product;
   
 - The `timestamps: true` option will automatically keep createdAt and updatedAt data
 
+
+<a id="modularizing-project"></a>
+### Making the Project Modular 
+
+- Create routes/product.route.js (also a convention, you can create like product.js) and move all the routes related to products into this file 
+
+**product.route.js:**
+```javascript
+import express from 'express'; 
+import mongoose from 'mongoose'; 
+import Product from '../models/product.model.js';
+
+const router = express.Router(); // making a router for product routes only
+
+router.get('/', async (req, res) => {
+    try {
+        const products = await Product.find({}); 
+        res.status(200).json({success: true, data: products}); 
+    } catch (error) {
+        console.log("Error fetching products: ", error.message); 
+        res.status(500).json({success: false, message: "server error"}); 
+    }
+}); 
+
+router.post('/', async (req, res) => {  // it should be an async function to use 'await'
+    const product = req.body; 
+
+    if (!product.name || !product.price || !product.image) {
+        return res.status(400).json({success: false, message: "Please provide all the necessary fields"}); 
+    }
+
+    const newProduct = new Product(product); // use the schema model to create the product 
+
+    // now save the model 
+    try {
+        await newProduct.save(); 
+        res.status(201).json({success: true, data: newProduct}); 
+    } catch (error) {
+        console.error("Error in create Product: ", error.message); 
+        res.status(500).json({success: false, message: "Server Error"}); 
+    }
+}); 
+
+router.put('/:id', async (req, res) => {
+    const {id} = req.params; 
+    const product = req.body; // receives the updated product information 
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({success: false, message: "Invalid Product id"}); 
+    }
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(id, product, {new: true}); 
+        res.status(200).json({success: true, data: updatedProduct}); 
+    } catch (error) {
+        res.status(500).json({success: false, message: "Server Error"}); 
+    }
+}); 
+
+router.delete('/:id', async (req, res) => {
+    const {id} = req.params; // productId should be an object (must be in {} braces)
+    try {
+        console.log(id); 
+        await Product.findByIdAndDelete(id); 
+        res.status(200).json({success: true, message: "Product Deleted"}); 
+    } catch (error) {
+        res.status(404).json({success: false, message: "Product not found"}); 
+    }
+}); 
+
+export default router;
+```
+
+**server.js:**
+```javascript
+import express from 'express';
+import productRouter from './routes/product.route.js';
+import { connectDB } from './config/db.js';
+
+const app = express();
+app.use(express.json()); // using a json parser to parse json data in req.body
+
+app.use('/api/products', productRouter); // routes to products related API 
+
+app.listen(5000, () => {
+    connectDB(); 
+    console.log("listening on http://localhost:5000");
+});
+```
+
+- But the product route is still so much messy with all the controller functions. So we can make some more modular changes to make the app more modular
+
+To do that: 
+
+- Create controllers/product.controller.js (also another convention, you can create like controllers/product.js) and 
+paste all the controller functions in the API methods:
+
+**product.controller.js:**
+```javascript
+import mongoose from 'mongoose'; 
+import Product from '../models/product.model.js';
+
+export const getProducts = async (req, res) => {
+    try {
+        const products = await Product.find({}); 
+        res.status(200).json({success: true, data: products}); 
+    } catch (error) {
+        console.log("Error fetching products: ", error.message); 
+        res.status(500).json({success: false, message: "server error"}); 
+    }
+}; 
+
+export const createProduct = async (req, res) => {  // it should be an async function to use 'await'
+    const product = req.body; 
+
+    if (!product.name || !product.price || !product.image) {
+        return res.status(400).json({success: false, message: "Please provide all the necessary fields"}); 
+    }
+
+    const newProduct = new Product(product); // use the schema model to create the product 
+
+    // now save the model 
+    try {
+        await newProduct.save(); 
+        res.status(201).json({success: true, data: newProduct}); 
+    } catch (error) {
+        console.error("Error in create Product: ", error.message); 
+        res.status(500).json({success: false, message: "Server Error"}); 
+    }
+}; 
+
+export const updateProduct = async (req, res) => {
+    const {id} = req.params; 
+    const product = req.body; // receives the updated product information 
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({success: false, message: "Invalid Product id"}); 
+    }
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(id, product, {new: true}); 
+        res.status(200).json({success: true, data: updatedProduct}); 
+    } catch (error) {
+        res.status(500).json({success: false, message: "Server Error"}); 
+    }
+}; 
+
+export const deleteProduct = async (req, res) => {
+    const {id} = req.params; // productId should be an object (must be in {} braces)
+    try {
+        console.log(id); 
+        await Product.findByIdAndDelete(id); 
+        res.status(200).json({success: true, message: "Product Deleted"}); 
+    } catch (error) {
+        res.status(404).json({success: false, message: "Product not found"}); 
+    }
+}; 
+```
+
+Now the product.route.js will be like this, more structured and organized:
+```javascript
+import express from 'express'; 
+import { createProduct, getProducts, updateProduct, deleteProduct } from '../controllers/product.controller.js';
+
+const router = express.Router(); // making a router for product routes only
+
+router.get('/', getProducts); 
+router.post('/', createProduct); 
+router.put('/:id', updateProduct); 
+router.delete('/:id', deleteProduct); 
+
+export default router;
+```
+
+- Now everything is more modular and organized. 
+
+### Flow Diagram of the Modular Project Structure
+
+Below is a visual representation of how API requests flow through the different components of our modular backend structure:
+
+```
+┌───────────────┐     ┌───────────────────┐     ┌──────────────────────┐     ┌─────────────────┐
+│               │     │                   │     │                      │     │                 │
+│  API Request  │────▶│    server.js      │────▶│  product.route.js    │────▶│product.controller│
+│   (Client)    │     │  (Entry Point)    │     │  (Route Handlers)    │     │ (Business Logic)│
+│               │     │                   │     │                      │     │                 │
+└───────────────┘     └───────────────────┘     └──────────────────────┘     └────────┬────────┘
+                                │                                                      │
+                                ▼                                                      ▼
+                      ┌───────────────────┐                               ┌─────────────────────┐
+                      │                   │                               │                     │
+                      │    config/db.js   │                               │  product.model.js   │
+                      │(Database Connect) │                               │   (Data Schema)     │
+                      │                   │                               │                     │
+                      └───────────────────┘                               └─────────────────────┘
+                                │                                                      │
+                                ▼                                                      ▼
+                      ┌───────────────────┐                               ┌─────────────────────┐
+                      │                   │                               │                     │
+                      │    MongoDB        │◀──────────────────────────────│   CRUD Operations   │
+                      │   (Database)      │                               │                     │
+                      │                   │                               │                     │
+                      └───────────────────┘                               └─────────────────────┘
+
+Flow:
+1. Client sends HTTP request to server
+2. server.js routes requests to appropriate router (product.route.js)
+3. product.route.js dispatches to appropriate controller function
+4. Controller uses the Product model to interact with database
+5. Database operations are performed
+6. Response flows back through the same path to the client
+```
+
 <a id="application-object"></a>
 ## Application Object
 
@@ -172,7 +385,7 @@ Creating multiple app within a app or sub-app
 ```javascript
 const app = express() // the main app
 const admin = express() // the sub app
-const dbAdmin = express() ; 
+const dbAdmin = express(); 
 
 admin.get('/', (req, res) => {
   console.log(admin.mountpath) // /admin
@@ -180,7 +393,7 @@ admin.get('/', (req, res) => {
 })
 
 app.use('/admin', admin) // mount the sub app
-admin.use('/dbadmin' , dbAdmin) ; 
+admin.use('/dbadmin', dbAdmin); 
 ```
 
 <a id="express-methods"></a>
@@ -214,9 +427,9 @@ Add callback triggers to route parameters, where name is the name of the paramet
 For example you are trying to get the information of a user with a particular user id but you also want to check data and do some processing and bind some data with the request object and then send the response to the user. 
 
 ```javascript
-app.get('/user/:id' , (req, res)=>{
-    res.send("get from db by id") ; 
-}) ; 
+app.get('/user/:id', (req, res) => {
+    res.send("get from db by id"); 
+}); 
 ```
 
 So for the checking part, you can add app.param() and add a checking for the parameter id.
@@ -224,18 +437,17 @@ So the app.param() will look for the parameter 'id' in every route and if a rout
 a format that has id in its format, then it will execute the callback trigger function. 
 
 ```javascript
-app.param('id' , (req, res, next , id)=>{
-    //you can anything or any types of checking in this callback function 
-    const user =  {
-        userId : id ,
-        name : "Mofazzal" , 
-        Address : "Bangladesh"
+app.param('id', (req, res, next, id) => {
+    // you can do anything or any types of checking in this callback function 
+    const user = {
+        userId: id,
+        name: "Mofazzal", 
+        Address: "Bangladesh"
     }
-    req.userDetails = user ;
+    req.userDetails = user;
     // 
-    next() ; //at last you have to call the next() function to forward the req, res
-
-}) ; 
+    next(); // at last you have to call the next() function to forward the req, res
+}); 
 ```
 
 You can do anything in the callback function. But remember to call the next() function at the last to forward the request after processing.
@@ -243,22 +455,22 @@ You can do anything in the callback function. But remember to call the next() fu
 And app.param() middleware should be defined before the route.
 
 ```javascript
-app.param('id' , (req, res, next , id)=>{
-    //you can anything or any types of checking in this callback function 
-    const user =  {
-        userId : id ,
-        name : "Mofazzal" , 
-        Address : "Bangladesh"
+app.param('id', (req, res, next, id) => {
+    // you can do anything or any types of checking in this callback function 
+    const user = {
+        userId: id,
+        name: "Mofazzal", 
+        Address: "Bangladesh"
     }
-    req.userDetails = user ;
+    req.userDetails = user;
     // 
-    next() ; //at last you have to call the next() function to forward the req, res
+    next(); // at last you have to call the next() function to forward the req, res
+}); 
 
-}) ; 
-app.get('/user/:id' , (req, res)=>{
-    console.log(req.userDetails) ; //Now you can see the details 
-    res.send("get from db by id") ; 
-}) ; 
+app.get('/user/:id', (req, res) => {
+    console.log(req.userDetails); // Now you can see the details 
+    res.send("get from db by id"); 
+}); 
 ```
 
 <a id="approute"></a>
@@ -287,27 +499,27 @@ Or another example:
 
 ```javascript
 app.route('/about/mission')
-    .get((req, res)=>{
+    .get((req, res) => {
         res.send("Application about mission with get") 
     })
-    .post((req, res)=>{
-        res.send("Application about missioin with post") ; 
+    .post((req, res) => {
+        res.send("Application about missioin with post"); 
     })
 ```
 
 <a id="appengine"></a>
 ### app.engine()
 
-- Using template engine(responsing a html template as response)
-- We are using EJS template engine(almost html) for example
+- Using template engine (responding a html template as response)
+- We are using EJS template engine (almost html) for example
 - For using express as a MVC architecture app.
 
 ```javascript
-app.set('view engine' , 'ejs') ; //see the settings table for information 
+app.set('view engine', 'ejs'); // see the settings table for information 
   
-//now you can send a html rendered page as a response(like laravel)
-app.get('/' , (req, res)=>{
-    res.render('index') //this will search in the views folder of the project(by default) and send the index.ejs file
+// now you can send a html rendered page as a response (like laravel)
+app.get('/', (req, res) => {
+    res.render('index') // this will search in the views folder of the project (by default) and send the index.ejs file
 })
 ```
 
@@ -321,7 +533,7 @@ Middleware functions are functions that have access to the request object (req),
 - Execute any code
 - Make changes to the request and response objects
 - End the request-response cycle
--Call the next middleware in the stack
+- Call the next middleware in the stack
 
 Example of a custom middleware:
 

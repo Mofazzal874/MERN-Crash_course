@@ -5,6 +5,7 @@ Welcome to the MERN (MongoDB, Express.js, React.js, Node.js) Crash Course docume
 ## Table of Contents
 
 - [Setup and Application Object](docs/Setup%20and%20Application%20Object.md)
+  - [Project Modularization](docs/Setup%20and%20Application%20Object.md#modularizing-project)
 - [Request Object](docs/Request%20Object.md)
 - [Response Object](docs/Response%20Object.md)
 - [Middleware](docs/Middleware.md)
@@ -20,6 +21,8 @@ The Setup and Application Object guide covers the fundamentals of setting up an 
   - [Creating Connection String](docs/Setup%20and%20Application%20Object.md#create-connection-string)
   - [NoSQL Database Structure](docs/Setup%20and%20Application%20Object.md#nosql-database-structure)
   - [Creating Data Models](docs/Setup%20and%20Application%20Object.md#creating-data-models)
+- [Project Modularization](docs/Setup%20and%20Application%20Object.md#modularizing-project)
+  - [API Flow Diagram](docs/Setup%20and%20Application%20Object.md#flow-diagram-of-the-modular-project-structure)
 - [Application Object](docs/Setup%20and%20Application%20Object.md#application-object)
 - [Express Methods](docs/Setup%20and%20Application%20Object.md#express-methods)
   - [`app.all()`](docs/Setup%20and%20Application%20Object.md#appall)
