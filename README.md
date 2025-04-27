@@ -5,6 +5,7 @@ Welcome to the MERN (MongoDB, Express.js, React.js, Node.js) Crash Course docume
 ## Table of Contents
 
 - [Setup and Application Object](docs/Setup%20and%20Application%20Object.md)
+  - [MongoDB Database setup](#mongodb-database-setup)
   - [Project Modularization](docs/Setup%20and%20Application%20Object.md#modularizing-project)
 - [Request Object](docs/Request%20Object.md)
 - [Response Object](docs/Response%20Object.md)
