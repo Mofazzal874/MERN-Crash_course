@@ -385,6 +385,188 @@ Flow:
 6. Response flows back through the same path to the client
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a id="frontend-setup"></a>
+# Frontend Setup 
+
+
+in the terminal :
+cd ./frontend
+
+and then 
+npm create vite@latest .   
+(you have to put the . (dot) to indicate the current folder)
+select - react and then javascript
+and then: 
+npm install
+and then
+npm run dev
+
+
+
+Now install chakra ui component library for Vite application in the frontend directory : 
+npm i @chakra-ui/react @emotion/react
+
+
+then go to main.jsx and wrapp the App component with ChakraProvider 
+
+```
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { ChakraProvider, createSystem, defaultConfig } from "@chakra-ui/react"
+
+import App from './App.jsx'
+
+// Create the default system for Chakra UI v3
+const system = createSystem(defaultConfig)
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <ChakraProvider value={system}>  //passing the created system with Default config using value prop
+      <App />
+    </ChakraProvider>
+  </StrictMode>,
+)
+```
+
+
+Now delete index.css and App.css file (we won't be needing them).
+
+
+Now in the App.jsx , delete everything and paste this to check -
+```
+import { Button } from "@chakra-ui/react"
+
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <>
+      <Button>Hello world</Button>
+    </>
+  )
+}
+
+export default App
+
+```
+Now run the frontend application(must be in frontend directory):
+
+npm run dev
+
+
+open localhost:5173/ (or the specified port)
+
+
+
+
+as react is single page and we need multiple page for the project , we need BrowserRouter to wrap the app . 
+for that install a package: 
+npm install react-router-dom
+
+
+and wrap the App component with BrowserRouter ->
+```
+<BrowserRouter>
+      <ChakraProvider value={system}>
+        <App />
+      </ChakraProvider>
+    </BrowserRouter>
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <a id="application-object"></a>
 ## Application Object
 
