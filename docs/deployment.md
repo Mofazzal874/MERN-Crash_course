@@ -83,6 +83,16 @@ so the scripts in the root projects's package.json will look like this:
 
 
 
+Now deploying the app with render.com ->(select deploy a web service)
+- select the repo from the list 
+- build command : npm run build
+- start command : npm run  start
+- fill env and other variables
+
+
+
+
+
 
 
 

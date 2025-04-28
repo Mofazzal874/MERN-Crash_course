@@ -2,6 +2,8 @@
 
 Welcome to the MERN (MongoDB, Express.js, React.js, Node.js) Crash Course documentation. This repository contains comprehensive guides and references for learning the MERN stack.
 
+Website Live at: https://product-store-mern-3ld6.onrender.com
+
 ## Table of Contents
 
 - [Setup Guide](#setup-guide)
@@ -26,6 +28,7 @@ Welcome to the MERN (MongoDB, Express.js, React.js, Node.js) Crash Course docume
     - [Backend Connection](docs/Setup.md#backend-connection)
     - [Routing Setup](docs/Setup.md#routing-setup)
     - [State Management with Zustand](docs/Setup.md#state-management-with-zustand)
+- [Deployment Guide](docs/deployment.md)
 - [Express.js Application Guide](#expressjs-application-guide)
   - [Application Object](docs/Application%20Object.md#application-object)
   - [Express Methods](docs/Application%20Object.md#express-methods)
