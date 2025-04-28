@@ -445,7 +445,7 @@ createRoot(document.getElementById('root')).render(
 ```
 
 
-Now delete index.css and App.css file (we won't be needing them).
+Now delete index.css and App.css file, assets/ folder (we won't be needing them).
 
 
 Now in the App.jsx , delete everything and paste this to check -
@@ -491,6 +491,55 @@ and wrap the App component with BrowserRouter ->
 
 
 ```
+
+
+setting up the Navbar and routes of different pages : 
+
+create src/components/Navbar.jsx and src/pages/HomePage.jsx and src/pages/CreatePage.jsx and then define the routes and Navbar in App.jsx ->
+```javascript
+import {Box} from "@chakra-ui/react" ; 
+import {Route , Routes} from 'react-router-dom' ;  
+
+
+import Navbar from './components/Navbar'
+import HomePage from './pages/HomePage'
+import CreatePage from './pages/CreatePage'
+
+
+function App() {
+  return (
+    <Box minH="100vh">
+      <Navbar/>
+      <Routes>
+        <Route path ="/" element={<HomePage/>} />
+        <Route path = "/create" element={<CreatePage/>}/>
+
+      </Routes>
+    </Box>
+  )
+}
+
+export default App ; 
+```
+
+some additional package installation :(just like before , frontend packages need to be installed in the frontend directory) 
+
+
+for PlusSquareIcon or other icons , :
+```
+npm i react-icons
+npm i @chakra-ui/icons
+
+```
+
+
+
+
+Now we'll be using a global state when fetching information from the database . Because in React , a slight change in the root or any component will result in the change or re-render of its all child components . So if we have a global state and if we need any information , then we can fetch it from there. 
+
+![alt text](../images/diagram-export-4-28-2025-2_21_32-PM.png)
+![alt text](../images/diagram-export-4-28-2025-2_08_17-PM.png)
+
 
 
 
