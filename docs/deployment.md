@@ -56,11 +56,33 @@ then we need to add another script in the root package.json :
 "start" : "node backend/server.js"
 
 
+
+Now before running npm run build , we have to do another thing. We have to specify NODE_ENV that we declared in the server.js file. So in the scripts , we'll specify it if the environment is in development or production.
+
+
+
+"scripts": {
+  "dev": "set NODE_ENV=development&& nodemon backend/server.js",
+  "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+  "start": "set NODE_ENV=production&& node backend/server.js"
+}
+
+**Note:** The && must be right after the environment variable definition without a space.
+
+
+
+now run :
+npm run start or npm start 
+in the root of the project folder 
 - this will start the both server
 
 
 so the scripts in the root projects's package.json will look like this:
 ![alt text](../images/image14.png)
+
+
+
+
 
 
 
