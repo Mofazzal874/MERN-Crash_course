@@ -475,6 +475,26 @@ open localhost:5173/ (or the specified port)
 
 
 
+### Now making connection with the backend and url setup :
+
+go to vite.config.js and set the server : 
+
+```
+    server:{
+      proxy: {
+        "/api" :{
+          target: "http://localhost:5000"
+        }
+      }
+    }
+```
+
+Now whenever we visit "/api" , it will prefix it with  http://localhost:5000 and making it like http://localhost:5000/api
+
+we will be needing this when making a global state in the store/product.js file
+
+
+
 
 as react is single page and we need multiple page for the project , we need BrowserRouter to wrap the app . 
 for that install a package: 
@@ -529,7 +549,7 @@ for PlusSquareIcon or other icons , :
 ```
 npm i react-icons
 npm i @chakra-ui/icons
-
+npm i zustand
 ```
 
 
@@ -539,6 +559,77 @@ Now we'll be using a global state when fetching information from the database . 
 
 ![alt text](../images/diagram-export-4-28-2025-2_21_32-PM.png)
 ![alt text](../images/diagram-export-4-28-2025-2_08_17-PM.png)
+
+- In this project , we are doing it in the store/product.js to make a global state(in this case, zustand) and fetch product data from the database.
+
+
+
+- Below is the example of creating a global state that will create products in the database for any components that needs the state. 
+product.js
+```javascript
+import {create} from 'zustand' ; 
+
+export const useProductStore = create((set)=>{
+  product :[] ; 
+  setProducts: (products)=>((products)),
+  createProduct: async (newProduct)=>{
+
+    //success: false
+    if(!newProduct.name|| !newProduct.image||!newProduct.price){
+      return {success:false , message: "Please fill in all the fields"} ; 
+    }
+
+    //success:true
+    const res = await fetch("/api/products" , {
+      method: "POST" , 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newProduct),
+    });
+    const data = await res.json() ; 
+    set((state) =>({products: {...state.products, data.data}})) ; 
+
+    return {success: true , message: "Product created Successfully"} ; 
+  },
+
+  //other methods
+  // fetchProducts : 
+  //updateProduct:
+  //DeleteProduct: 
+
+
+
+})
+```
+
+now this useProductStore global state can be used in any component like this 
+```javascript
+function ComponentName(){
+  const {products} = useProductStore() ; 
+  // 
+  // 
+  // 
+}
+```
+
+
+
+- like that you can also create global state for fetchProducts , updateProducts and deleteProducts by defining functions in the useProductStore global state in the product.js file.This is both modular and also efficient.
+
+When you want to use it , just make a state variable with the function from the useProductStore()  in the specified component where you want to use it like this ---
+
+
+```javascript
+function ComponentName(){
+   
+  const {fetchProducts, products} = useProductStore() ; 
+  const{deleteProduct} = useProductStore() ; 
+  // 
+  // 
+  // 
+}
+```
 
 
 
