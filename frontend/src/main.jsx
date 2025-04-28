@@ -1,20 +1,15 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { ChakraProvider, createSystem, defaultConfig } from "@chakra-ui/react"
-import {BrowserRouter} from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import { ChakraProvider } from "@chakra-ui/react";
+import { BrowserRouter } from "react-router-dom";
 
-import App from './App.jsx'
-
-// Create the default system for Chakra UI v3
-const system = createSystem(defaultConfig)
-
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter>
-      <ChakraProvider value={system}>
-        <App />
-      </ChakraProvider>
-    </BrowserRouter>
-    
-  </StrictMode>,
-)
+ReactDOM.createRoot(document.getElementById("root")).render(
+	<React.StrictMode>
+		<BrowserRouter>
+			<ChakraProvider>
+				<App />
+			</ChakraProvider>
+		</BrowserRouter>
+	</React.StrictMode>
+);
