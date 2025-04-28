@@ -4,39 +4,96 @@ Welcome to the MERN (MongoDB, Express.js, React.js, Node.js) Crash Course docume
 
 ## Table of Contents
 
-- [Setup and Application Object](docs/Setup%20and%20Application%20Object.md)
-  - [MongoDB Database setup](docs/Setup%20and%20Application%20Object.md#mongodb-database-setup)
-  - [Project Modularization](docs/Setup%20and%20Application%20Object.md#modularizing-project)
+- [Setup Guide](#setup-guide)
+  - [Project Setup](#project-setup)
+  - [Backend Development](#backend-development)
+    - [Server Setup](#server-setup)
+    - [MongoDB Database Setup](#mongodb-database-setup)
+    - [Project Modularization](#project-modularization)
+  - [Frontend Development](#frontend-development)
+    - [Vite Setup](#vite-setup)
+    - [Chakra UI Integration](#chakra-ui-integration)
+    - [Backend Connection](#backend-connection)
+    - [Routing Setup](#routing-setup)
+    - [State Management with Zustand](#state-management-with-zustand)
+- [Express.js Application Guide](#expressjs-application-guide)
+  - [Application Object](#application-object)
+  - [Express Methods](#express-methods)
+  - [Middleware](#middleware-in-express)
+  - [Request & Response](#request--response)
+  - [Error Handling](#error-handling-in-express)
+  - [Tips & Tricks](#tips--tricks)
 - [Request Object](docs/Request%20Object.md)
 - [Response Object](docs/Response%20Object.md)
 - [Middleware](docs/Middleware.md)
 - [Error Handling](docs/Error%20Handling.md)
 - [Node.js Questions and Answers](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md)
 
-## Setup and Application Object
+## Setup Guide
 
-The Setup and Application Object guide covers the fundamentals of setting up an Express.js application.
+The Setup guide covers the fundamentals of setting up a MERN stack application.
 
-- [Project Setup](docs/Setup%20and%20Application%20Object.md#project-setup)
-- [MongoDB Database Setup](docs/Setup%20and%20Application%20Object.md#mongodb-database-setup)
-  - [Creating Connection String](docs/Setup%20and%20Application%20Object.md#create-connection-string)
-  - [NoSQL Database Structure](docs/Setup%20and%20Application%20Object.md#nosql-database-structure)
-  - [Creating Data Models](docs/Setup%20and%20Application%20Object.md#creating-data-models)
-- [Project Modularization](docs/Setup%20and%20Application%20Object.md#modularizing-project)
-  - [API Flow Diagram](docs/Setup%20and%20Application%20Object.md#flow-diagram-of-the-modular-project-structure)
-- [Application Object](docs/Setup%20and%20Application%20Object.md#application-object)
-- [Express Methods](docs/Setup%20and%20Application%20Object.md#express-methods)
-  - [`app.all()`](docs/Setup%20and%20Application%20Object.md#appall)
-  - [`app.listen()`](docs/Setup%20and%20Application%20Object.md#applisten)
-  - [`app.param()`](docs/Setup%20and%20Application%20Object.md#appparam)
-  - [`app.route()`](docs/Setup%20and%20Application%20Object.md#approute)
-  - [`app.engine()`](docs/Setup%20and%20Application%20Object.md#appengine)
-- [Middleware](docs/Setup%20and%20Application%20Object.md#middleware)
-- [Request & Response](docs/Setup%20and%20Application%20Object.md#request--response)
-- [Error Handling](docs/Setup%20and%20Application%20Object.md#error-handling)
-- [Tips & Tricks](docs/Setup%20and%20Application%20Object.md#tips--tricks)
+### Project Setup
+- [Initialize Project](docs/Setup.md#project-setup)
+- [Install Dependencies](docs/Setup.md#project-setup)
 
-[Read the full guide](docs/Setup%20and%20Application%20Object.md)
+### Backend Development
+- [Server Setup](docs/Setup.md#backend-setup)
+- [MongoDB Database Setup](docs/Setup.md#mongodb-database-setup)
+  - [Create Connection String](docs/Setup.md#create-connection-string)
+  - [Set Network Access](docs/Setup.md#set-network-access)
+  - [Access MongoDB](docs/Setup.md#access-mongodb)
+  - [Create Database Connection](docs/Setup.md#create-database-connection)
+  - [NoSQL Database Structure](docs/Setup.md#nosql-database-structure)
+  - [Creating Data Models](docs/Setup.md#creating-data-models)
+- [Project Modularization](docs/Setup.md#modularizing-project)
+  - [Routes](docs/Setup.md#modularizing-project)
+  - [Controllers](docs/Setup.md#modularizing-project)
+  - [Models](docs/Setup.md#modularizing-project)
+  - [API Flow Diagram](docs/Setup.md#flow-diagram-of-the-modular-project-structure)
+
+### Frontend Development
+- [Vite Setup](docs/Setup.md#frontend-setup)
+- [Chakra UI Integration](docs/Setup.md#chakra-ui-integration)
+- [Backend Connection](docs/Setup.md#backend-connection)
+- [Routing Setup](docs/Setup.md#routing-setup)
+- [State Management with Zustand](docs/Setup.md#state-management-with-zustand)
+
+[Read the full setup guide](docs/Setup.md)
+
+## Express.js Application Guide
+
+The Express.js Application guide explains the core concepts of Express.js.
+
+### Application Object
+- [Creating Apps and Sub-Apps](docs/Application%20Object.md#application-object)
+
+### Express Methods
+- [`app.all()`](docs/Application%20Object.md#appall) - Handle all HTTP methods at a path
+- [`app.listen()`](docs/Application%20Object.md#applisten) - Start the server
+- [`app.param()`](docs/Application%20Object.md#appparam) - Add route parameter handlers
+- [`app.route()`](docs/Application%20Object.md#approute) - Chain route handlers
+- [`app.engine()`](docs/Application%20Object.md#appengine) - Set up template engines
+
+### Middleware in Express
+- [Custom Middleware](docs/Application%20Object.md#middleware)
+- [Built-in Middleware](docs/Application%20Object.md#middleware)
+
+### Request & Response
+- [Request Object Overview](docs/Application%20Object.md#request-object)
+- [Response Object Overview](docs/Application%20Object.md#response-object)
+
+### Error Handling in Express
+- [Custom Error Handlers](docs/Application%20Object.md#error-handling)
+- [Route-Specific Error Handling](docs/Application%20Object.md#error-handling)
+
+### Tips & Tricks
+- [Environment Variables](docs/Application%20Object.md#tips--tricks)
+- [Organizing Routes](docs/Application%20Object.md#tips--tricks)
+- [Async/Await with Express](docs/Application%20Object.md#tips--tricks)
+- [Production Best Practices](docs/Application%20Object.md#tips--tricks)
+
+[Read the full Express.js Application guide](docs/Application%20Object.md)
 
 ## Request Object
 
@@ -48,30 +105,19 @@ The Request Object guide provides detailed information on handling HTTP requests
   - [`req.baseUrl`](docs/Request%20Object.md#reqbaseurl)
   - [`req.originalUrl`](docs/Request%20Object.md#reqoriginalurl)
   - [`req.path`](docs/Request%20Object.md#reqpath)
-  - [`req.hostname`](docs/Request%20Object.md#reqhostname)
-  - [`req.ip`](docs/Request%20Object.md#reqip)
-  - [`req.method`](docs/Request%20Object.md#reqmethod)
-  - [`req.protocol`](docs/Request%20Object.md#reqprotocol)
   - [`req.params`](docs/Request%20Object.md#reqparams)
   - [`req.query`](docs/Request%20Object.md#reqquery)
   - [`req.body`](docs/Request%20Object.md#reqbody)
   - [`req.cookies`](docs/Request%20Object.md#reqcookies)
-  - [`req.signedCookies`](docs/Request%20Object.md#reqsignedcookies)
-  - [`req.secure`](docs/Request%20Object.md#reqsecure)
-  - [`req.app`](docs/Request%20Object.md#reqapp)
   - [`req.route`](docs/Request%20Object.md#reqroute)
 - [Request Methods](docs/Request%20Object.md#request-methods)
   - [`req.accepts(types)`](docs/Request%20Object.md#reqacceptstypes)
   - [`req.get()`](docs/Request%20Object.md#reqget)
-- [Advanced Request Object Tips and Examples](docs/Request%20Object.md#advanced-request-object-tips-and-examples)
+- [Advanced Request Object Tips](docs/Request%20Object.md#advanced-request-object-tips-and-examples)
   - [Testing Request Objects](docs/Request%20Object.md#testing-request-objects)
-  - [Useful Request Object Properties and Methods](docs/Request%20Object.md#useful-request-object-properties-and-methods)
-  - [Best Practices for Request Handling](docs/Request%20Object.md#best-practices-for-request-handling)
-  - [Security Considerations](docs/Request%20Object.md#security-considerations)
-  - [Performance Tips](docs/Request%20Object.md#performance-tips)
   - [Common Troubleshooting](docs/Request%20Object.md#common-troubleshooting)
 
-[Read the full guide](docs/Request%20Object.md)
+[Read the full Request Object guide](docs/Request%20Object.md)
 
 ## Response Object
 
@@ -89,24 +135,10 @@ The Response Object guide covers how to send responses back to clients using Exp
   - [`res.send()`](docs/Response%20Object.md#ressend)
   - [`res.json()`](docs/Response%20Object.md#resjson)
   - [`res.status()`](docs/Response%20Object.md#resstatus)
-  - [`res.sendStatus()`](docs/Response%20Object.md#ressendstatus)
   - [`res.render()`](docs/Response%20Object.md#resrender)
-  - [`res.format()`](docs/Response%20Object.md#resformat)
-  - [`res.location()`](docs/Response%20Object.md#reslocation)
   - [`res.redirect()`](docs/Response%20Object.md#resredirect)
-- [Explanation with Code](docs/Response%20Object.md#explanation-with-code)
-  - [`res.locals` Examples](docs/Response%20Object.md#reslocals-1)
-  - [`res.headersSent` Examples](docs/Response%20Object.md#resheaderssent-1)
-  - [`res.end()` Examples](docs/Response%20Object.md#resend-1)
-  - [`res.send()` Examples](docs/Response%20Object.md#ressend-1)
-  - [`res.json()` Examples](docs/Response%20Object.md#resjson-1)
-  - [`res.sendStatus()` Examples](docs/Response%20Object.md#ressendstatus-1)
-  - [`res.format()` Examples](docs/Response%20Object.md#resformat-1)
-  - [`res.cookie()` Examples](docs/Response%20Object.md#rescookie-1)
-  - [`res.location()` Examples](docs/Response%20Object.md#reslocation-1)
-  - [`res.redirect()` Examples](docs/Response%20Object.md#resredirect-1)
 
-[Read the full guide](docs/Response%20Object.md)
+[Read the full Response Object guide](docs/Response%20Object.md)
 
 ## Middleware
 
@@ -119,15 +151,12 @@ The Middleware guide explains how middleware functions work in Express.js applic
 - [Types of Middleware in Express](docs/Middleware.md#types-of-middleware-in-express)
 - [Middleware Examples](docs/Middleware.md#middleware-examples)
   - [Application-level Middleware](docs/Middleware.md#1-application-level-middleware)
-    - [Basic Middleware](docs/Middleware.md#example-1-basic-middleware)
-    - [Multiple Middleware](docs/Middleware.md#example-2-multiple-middleware)
-    - [Logger Middleware](docs/Middleware.md#example-3-logger-middleware)
   - [Router-level Middleware](docs/Middleware.md#2-router-level-middleware)
   - [Third-party Middleware](docs/Middleware.md#3-third-party-middleware)
   - [Error-handling Middleware](docs/Middleware.md#4-error-handling-middleware)
   - [Configurable Middleware](docs/Middleware.md#5-configurable-middleware)
 
-[Read the full guide](docs/Middleware.md)
+[Read the full Middleware guide](docs/Middleware.md)
 
 ## Error Handling
 
@@ -142,7 +171,7 @@ The Error Handling guide covers techniques for handling errors in Express.js app
 - [Production vs Development Error Handling](docs/Error%20Handling.md#production-vs-development-error-handling)
 - [Best Practices](docs/Error%20Handling.md#best-practices)
 
-[Read the full guide](docs/Error%20Handling.md)
+[Read the full Error Handling guide](docs/Error%20Handling.md)
 
 ## Node.js Questions and Answers
 
@@ -156,67 +185,69 @@ This section includes common questions and answers about Node.js development.
   - [Export vs Export Default](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#export-vs-export-default)
 - [Node.js in Modern Web Development](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#nodejs-in-modern-web-development)
   - [What is Node.js?](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#what-is-nodejs)
-  - [Key Features of Node.js](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#key-features-of-nodejs)
-  - [Node.js vs. Browser JavaScript](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#nodejs-vs-browser-javascript)
-  - [Common Use Cases for Node.js](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#common-use-cases-for-nodejs)
   - [Node.js in the Development Workflow](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#nodejs-in-the-development-workflow)
 - [HTTP Request and Response Concepts](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#http-request-and-response-concepts)
 
-[Read the full guide](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md)
+[Read the full Node.js Q&A guide](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md)
 
 ## Interactive Learning Path
 
 For the best learning experience, we recommend following this documentation in sequence:
 
-1. Start with [Setup and Application Object](docs/Setup%20and%20Application%20Object.md) to understand the basics
-2. Explore the [Request Object](docs/Request%20Object.md) to learn how Express handles incoming requests
-3. Continue with the [Response Object](docs/Response%20Object.md) to see how Express sends back data
-4. Dive into [Middleware](docs/Middleware.md) to understand the core concept that powers Express
-5. Learn about [Error Handling](docs/Error%20Handling.md) to make your applications robust
-6. Review [Node.js Questions and Answers](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md) for deeper insights
+1. Start with the [Setup Guide](docs/Setup.md) to understand the project structure and setup process
+2. Learn about the [Express.js Application](docs/Application%20Object.md) to understand the core concepts
+3. Explore the [Request Object](docs/Request%20Object.md) to learn how Express handles incoming requests
+4. Continue with the [Response Object](docs/Response%20Object.md) to see how Express sends back data
+5. Dive into [Middleware](docs/Middleware.md) to understand the core concept that powers Express
+6. Learn about [Error Handling](docs/Error%20Handling.md) to make your applications robust
+7. Review [Node.js Questions and Answers](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md) for deeper insights
 
 ## Visual Learning Aids
 
 Throughout the documentation, you'll find visual aids to help understand concepts:
 
+- [API Flow Diagram](docs/Setup.md#flow-diagram-of-the-modular-project-structure) (Setup Guide)
 - [Client-Server Request visualization](docs/Request%20Object.md#visual-representation) (Request Object)
+- [Request-Response Mechanism](docs/Response%20Object.md#request-response-mechanism-visual) (Response Object)
 - [Request-Response Cycle with Middleware](docs/Middleware.md#request-response-cycle-with-middleware) (Middleware)
 - [Node.js Development Workflow](docs/Some%20Questions%20and%20Answer%20on%20Nodejs.md#nodejs-in-the-development-workflow) (Node.js Q&A)
-
-## Code Examples
-
-All guides include practical code examples that demonstrate:
-
-- Basic usage patterns
-- Common implementation scenarios
-- Best practices
-- Troubleshooting techniques
-
-## Additional Resources
-
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [Express.js Documentation](https://expressjs.com/)
-- [React.js Documentation](https://reactjs.org/docs/getting-started.html)
-- [Node.js Documentation](https://nodejs.org/en/docs/)
-- [MDN Web Docs on HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)
-- [JWT Authentication](https://jwt.io/introduction/)
-- [REST API Design Best Practices](https://restfulapi.net/)
+- [State Management with Zustand](docs/Setup.md#state-management-with-zustand) (Frontend Setup)
 
 ## Project Structure
 
 ```
 ├── backend/                # Backend Express.js server
+│   ├── config/             # Configuration files
+│   │   └── db.js           # Database connection
+│   ├── controllers/        # Route controllers
+│   │   └── product.controller.js # Product controller
+│   ├── models/             # Data models
+│   │   └── product.model.js # Product model
+│   ├── routes/             # API routes
+│   │   └── product.route.js # Product routes
 │   ├── handle.js           # Request handler
 │   └── server.js           # Main server file
 ├── docs/                   # Documentation
+│   ├── Application Object.md # Guide on Express application
 │   ├── Error Handling.md   # Guide on error handling
 │   ├── Middleware.md       # Guide on middleware
 │   ├── Request Object.md   # Guide on request object
 │   ├── Response Object.md  # Guide on response object
-│   ├── Setup and Application Object.md  # Guide on setting up Express
+│   ├── Setup.md            # Guide on setting up Express
 │   └── Some Questions and Answer on Nodejs.md  # Q&A about Node.js
 ├── frontend/               # Frontend React application
+│   ├── src/                # Source code
+│   │   ├── components/     # React components
+│   │   │   └── Navbar.jsx  # Navigation component
+│   │   ├── pages/          # Page components
+│   │   │   ├── CreatePage.jsx # Create product page
+│   │   │   └── HomePage.jsx   # Home page
+│   │   ├── App.jsx         # Main React component
+│   │   └── main.jsx        # Entry point
+│   ├── package.json        # Frontend dependencies
+│   └── vite.config.js      # Vite configuration
 ├── images/                 # Images for documentation
+├── package.json            # Backend dependencies
 └── README.md               # This documentation overview
 ```
 
@@ -228,19 +259,18 @@ To get started with the MERN stack, follow these steps:
 2. Install MongoDB
 3. Clone this repository
 4. Install dependencies with `npm install`
-5. Start the backend server with `npm run server`
-6. Start the frontend application with `npm run client`
-7. For concurrent development, use `npm run dev`
+5. Start the backend server with `npm run dev`
+6. Navigate to the frontend directory and install dependencies with `npm install`
+7. Start the frontend application with `npm run dev`
 
-## Quick Reference Cards
+## Additional Resources
 
-| Express Component | Primary Use | Documentation Link |
-|-------------------|-------------|-------------------|
-| Application Object | Configure and set up Express app | [View Guide](docs/Setup%20and%20Application%20Object.md#application-object) |
-| Request Object | Handle incoming HTTP requests | [View Guide](docs/Request%20Object.md) |
-| Response Object | Send data back to clients | [View Guide](docs/Response%20Object.md) |
-| Middleware | Process requests between endpoints | [View Guide](docs/Middleware.md) |
-| Routing | Define application endpoints | [View Guide](docs/Setup%20and%20Application%20Object.md#express-methods) |
-| Error Handling | Handle exceptions gracefully | [View Guide](docs/Error%20Handling.md) |
+- [MongoDB Documentation](https://docs.mongodb.com/)
+- [Express.js Documentation](https://expressjs.com/)
+- [React.js Documentation](https://reactjs.org/docs/getting-started.html)
+- [Node.js Documentation](https://nodejs.org/en/docs/)
+- [Zustand State Management](https://github.com/pmndrs/zustand)
+- [Chakra UI Documentation](https://chakra-ui.com/docs/getting-started)
+- [Vite Documentation](https://vitejs.dev/guide/)
 
 
