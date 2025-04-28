@@ -1,30 +1,29 @@
+# Deployment Guide
 
+## Current Environment
+- Backend API application: `localhost:5000`
+- Frontend React application: `localhost:5173`
 
+## Deployment Goal
+We want to make a way so that both (server and client) can be visited at -> `localhost:5000`
 
+## Deployment Steps
 
-Right now our backend api application is in -> localhost:5000 
-and frontend react application is in       -> localhost:5173 
+### 1. Build the Frontend
+- Run the command: `npm run build`
 
-
-we want to make a way so that both(server and client) can be visited at -> localhost:5000 
-
-first build the frontend 
-npm run build
-
-go to server.js->
-
-and add 
+### 2. Update Server Configuration
+- Go to server.js and add:
+```javascript
 import path from "path" 
-and 
-const __dirname = path.resolve() ; 
+const __dirname = path.resolve();
+```
 
-
-and then this code part->
+- Then add this code part:
 ```javascript
 if(process.env.NODE_ENV === "production"){
     app.use(express.static(path.join(__dirname, "/frontend/dist"))) //__dirname will take to root and then
                                                                     //go to frontend and then dist
-
 
     app.get("*" , (req, res)=>{
         res.sendFile(path.resolve(__dirname, "frontend" , "dist" , "index.html")) ;
@@ -32,62 +31,52 @@ if(process.env.NODE_ENV === "production"){
 }
 ```
 
+### 3. Prepare for Deployment
+- You can delete the node_modules in both frontend and backend (optional, good for GitHub).
 
+### 4. Configure Build Process
+To make the project deployable under localhost:5000:
+- We will create a mechanism that, when we run the project (with npm run build) in the root folder, it will also run the frontend project as well.
+- Go to package.json of the root project (not frontend or backend)
 
-
-and then you can delete the node_modules in both frontend and backend(optional , good for github).
-
-
-
-now to make the project deployable under localhost:5000 :
-- what we will do ? - we will create a mechanism that , when we run the project(with npm run build) in the root folder , it will also run the frontend project as well.
--go to package.json of the root project(not frontend or backend):
-
-package.json 
-and add this in the scripts: 
-
+### 5. Update Root package.json Scripts
+Add these to the scripts section:
+```json
 "build" : "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+```
+- This installs npm packages for both backend (the first npm install) and frontend (the second npm install) and then runs the npm run build command.
 
-
-- so actually it is installing npm packages both backend(the first npm install) and frontend(the second npm install) and then running the npm run build command at the last .
-
-
-then we need to add another script in the root package.json :
+Add start script:
+```json
 "start" : "node backend/server.js"
+```
 
+### 6. Configure Environment Variables
+Before running npm run build, we need to specify NODE_ENV that we declared in the server.js file:
 
-
-Now before running npm run build , we have to do another thing. We have to specify NODE_ENV that we declared in the server.js file. So in the scripts , we'll specify it if the environment is in development or production.
-
-
-
+```json
 "scripts": {
   "dev": "set NODE_ENV=development&& nodemon backend/server.js",
   "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
   "start": "set NODE_ENV=production&& node backend/server.js"
 }
+```
 
 **Note:** The && must be right after the environment variable definition without a space.
 
+### 7. Run the Application
+- Run the command in the root of the project folder: `npm run start` or `npm start`
+- This will start both server and client
 
-
-now run :
-npm run start or npm start 
-in the root of the project folder 
-- this will start the both server
-
-
-so the scripts in the root projects's package.json will look like this:
+Your final scripts in the root project's package.json should look like this:
 ![alt text](../images/image14.png)
 
-
-
-
-Now deploying the app with render.com ->(select deploy a web service)
-- select the repo from the list 
-- build command : npm run build
-- start command : npm run  start
-- fill env and other variables
+## Deploying to Render.com
+1. Select "Deploy a web service"
+2. Select the repo from the list
+3. Set build command: `npm run build`
+4. Set start command: `npm run start`
+5. Fill in environment variables and other required fields
 
 
 
