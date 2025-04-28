@@ -31,6 +31,9 @@ A comprehensive guide for setting up and using Express.js in a MERN stack applic
 <a id="project-setup"></a>
 ## Project Setup
 
+link to the tutorial video : 
+[Youtube](https://youtu.be/O3BUHwfHf84?si=Gxxo4fAuF7fItssi)
+
 
 - Initialize the project in the main root folder (not in the backend or frontend)
   ```bash
