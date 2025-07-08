@@ -564,7 +564,7 @@ Now we'll be using a global state when fetching information from the database . 
 ![alt text](../images/diagram-export-4-28-2025-2_21_32-PM.png)
 ![alt text](../images/diagram-export-4-28-2025-2_08_17-PM.png)
 
-- In this project , we are doing it in the store/product.js to make a global state(in this case, zustand) and fetch product data from the database.
+- In this project , we are doing it in the store/product.js to make a global state(in this case, zustand) and fetch product data from the database.(Redux do a similar types of thing to store states in a dedicated global store. All you have to do is subscribe to use state data)
 
 
 
