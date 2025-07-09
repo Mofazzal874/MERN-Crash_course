@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide to JS Objects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Highlight.js CSS for syntax highlighting (atom-one-dark theme) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        /* Style for the editable code blocks */
+        .code-block {
+            background-color: #282c34; /* atom-one-dark background */
+            color: #abb2bf; /* default text color */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            outline: none; /* remove focus border */
+            min-height: 50px;
+        }
+        .output-block {
+            background-color: #f1f5f9; /* slate-100 */
+            border: 1px solid #e2e8f0; /* slate-200 */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            min-height: 50px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #1e293b;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .run-button {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .run-button:hover {
+            background-color: #1d4ed8; /* blue-700 */
+        }
+        .error-text {
+            color: #dc2626; /* red-600 */
+        }
+        .info-box {
+            background-color: #eef2ff; /* indigo-50 */
+            border-left: 4px solid #4f46e5; /* indigo-600 */
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border-radius: 0.25rem;
+        }
+        .sidebar-link {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            color: #334155; /* slate-700 */
+            transition: background-color 0.2s, color 0.2s;
+            cursor: pointer;
+        }
+        .sidebar-link:hover {
+            background-color: #e2e8f0; /* slate-200 */
+        }
+        .sidebar-link.active {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            font-weight: 600;
+        }
+        /* Highlight.js styles */
+        .hljs-comment,.hljs-quote{color:#5c6370;font-style:italic}.hljs-doctag,.hljs-keyword,.hljs-formula{color:#c678dd}.hljs-section,.hljs-name,.hljs-selector-tag,.hljs-deletion,.hljs-subst{color:#e06c75}.hljs-literal{color:#56b6c2}.hljs-string,.hljs-regexp,.hljs-addition,.hljs-attribute,.hljs-meta .hljs-string{color:#98c379}.hljs-attr,.hljs-variable,.hljs-template-variable,.hljs-type,.hljs-selector-class,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-number{color:#d19a66}.hljs-symbol,.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-title{color:#61aeee}.hljs-built_in,.hljs-title.class_,.hljs-class .hljs-title{color:#e6c07b}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.hljs-link{text-decoration:underline}
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="flex flex-col md:flex-row">
+            <!-- Side Panel -->
+            <aside class="w-full md:w-1/4 bg-slate-100 p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                <h2 class="text-xl font-bold text-slate-800 mb-4">Topics</h2>
+                <nav>
+                    <a id="nav-basics" onclick="showCategory('basics')" class="sidebar-link">Object Basics</a>
+                    <a id="nav-spread" onclick="showCategory('spread')" class="sidebar-link mt-2">Spread Operator</a>
+                    <a id="nav-rest" onclick="showCategory('rest')" class="sidebar-link mt-2">Rest Parameter</a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="w-full md:w-3/4 p-6 md:p-8">
+                <!-- Category: Object Basics -->
+                <div id="content-basics" class="content-category hidden">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-6">Object Basics & Shorthand</h1>
+                    
+                    <section class="mb-12">
+                        <h2 class="text-2xl font-semibold text-slate-700 border-b pb-2 mb-4">Creating and Accessing Objects</h2>
+                        <p class="text-slate-600 mb-4">
+                            Objects in JavaScript are collections of key-value pairs. You can easily extract an object's keys, values, or both (as entries) into arrays.
+                        </p>
+                        <pre><code id="code-1" class="language-javascript code-block" contenteditable="true" spellcheck="false">var obj = {
+    name: "Javascript",
+    founder: "Brendan Eich",
+    year: 1995,
+    ranking: 1,
+    isObjectOriented: true,
+};
+
+// to print the whole object
+console.log("Original Object:", obj);
+
+// returns an array of the keys of the object
+var keys = Object.keys(obj);
+console.log("Keys:", keys);
+
+// return an array of the values of the object
+var values = Object.values(obj);
+console.log("Values:", values);
+
+// returns an array of the key-value pairs of the object
+// (each key-value pair is an array itself like [key, value])
+var entries = Object.entries(obj);
+console.log("Entries:", entries);</code></pre>
+                        <div class="mt-4">
+                            <button onclick="runCode(['code-1'], 'output-1')" class="run-button">Run Code</button>
+                            <div id="output-1" class="output-block"></div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-semibold text-slate-700 border-b pb-2 mb-4">Object Property Shorthand</h2>
+                        <p class="text-slate-600 mb-4">
+                            If you have a variable with the same name as the object key you want to create, you can use a shorthand notation to make your code cleaner.
+                        </p>
+                        <pre><code id="code-2" class="language-javascript code-block" contenteditable="true" spellcheck="false">var x = 4;
+var y = 5;
+
+var obj2 = {
+    name: "Javascript",
+    founder: "Brendan Eich",
+    year: 1995,
+    ranking: 1,
+    isObjectOriented: true,
+    x, // this is equivalent to x: x
+    y, // this is equivalent to y: y
+};
+
+console.log(obj2);</code></pre>
+                        <div class="mt-4">
+                            <button onclick="runCode(['code-2'], 'output-2')" class="run-button">Run Code</button>
+                            <div id="output-2" class="output-block"></div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Category: Spread Operator -->
+                <div id="content-spread" class="content-category hidden">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-6">The Spread Operator (...)</h1>
+                    <section>
+                        <p class="text-slate-600 mb-4">
+                            The spread operator is used to expand an iterable (like an array or object) into its individual elements.
+                        </p>
+                        
+                        <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-2">With Arrays</h3>
+                        <pre><code id="code-3" class="language-javascript code-block" contenteditable="true" spellcheck="false">var numbers = [1, 2, 3];
+
+// taking all the elements of number array and adding 4, 5, 6 to it
+var newNumbers = [...numbers, 4, 5, 6];
+
+console.log(newNumbers);</code></pre>
+                        
+                        <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-2">Immutable Copying with Spread</h3>
+                        <p class="text-slate-600 mb-4">
+                           You can copy an array immutably (without modifying the original array). This creates a new array with the same elements. If you modify the new array, the original will not be affected.
+                        </p>
+                        <pre><code id="code-4" class="language-javascript code-block" contenteditable="true" spellcheck="false">var numbers2 = [10, 11, 12];
+var newNumbers2 = [...numbers2];
+
+console.log("Original before modification:", numbers2);
+console.log("Copy before modification:", newNumbers2);
+
+// modifying the original array
+numbers2.push(13);
+
+console.log("Original after modification:", numbers2);
+console.log("Copy remains unchanged:", newNumbers2);</code></pre>
+
+                        <div class="info-box">
+                            <p class="font-bold text-slate-700">TL;DR: Why Immutability Matters</p>
+                            <p class="text-slate-600 mt-2">If you copy an array like `newNumbers = numbers`, this is a mutable way. `newNumbers` just holds a reference (or pointer) to the original `numbers` array. If you modify `newNumbers`, the original `numbers` will also be changed.</p>
+                            <p class="text-slate-600 mt-2">This is why, when updating state in frameworks like React, you must do it in an immutable way. You first create a copy of the state (with the spread operator), modify the copy, and then return the copy. This ensures predictable state changes without side effects.</p>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-slate-700 mt-8 mb-2">With Objects</h3>
+                        <p class="text-slate-600 mb-4">
+                            The spread operator works in the same way with objects, allowing you to combine them or copy them.
+                        </p>
+                        <pre><code id="code-5" class="language-javascript code-block" contenteditable="true" spellcheck="false">var myObj1 = {
+    name: "John",
+    age: 30,
+};
+
+var myObj2 = {
+    work: "Software Engineer",
+    country: "USA"
+};
+
+var myObj3 = {
+    ...myObj1, // spreading the properties of myObj1
+    ...myObj2, // spreading the properties of myObj2
+    city: "New York" // adding a new property
+};
+console.log("Combined Object:", myObj3);</code></pre>
+
+                        <h3 class="text-xl font-semibold text-slate-700 mt-6 mb-2">Excluding Properties</h3>
+                        <p class="text-slate-600 mb-4">
+                            You can combine the spread operator with destructuring to exclude certain properties while copying an object.
+                        </p>
+                        <pre><code id="code-6" class="language-javascript code-block" contenteditable="true" spellcheck="false">var obj4 = {
+    name: "Alice",
+    age: 25,
+    country: "Canada",
+    profession: "Data"
+};
+
+// using destructuring to pull out 'country' and put the rest in obj5
+var { country, ...obj5 } = obj4;
+console.log("Original 'country' property:", country);
+console.log("New object without 'country':", obj5);</code></pre>
+
+                        <div class="mt-4">
+                            <button onclick="runCode(['code-3', 'code-4', 'code-5', 'code-6'], 'output-3')" class="run-button">Run Code</button>
+                            <div id="output-3" class="output-block"></div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Category: Rest Parameter -->
+                <div id="content-rest" class="content-category hidden">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-6">The Rest Parameter (...)</h1>
+                    <section>
+                        <p class="text-slate-600 mb-4">
+                            The rest parameter looks like the spread operator but is used in function definitions. It collects the remaining arguments passed to a function into a single array. This allows a function to accept an indefinite number of arguments (a "variadic" function).
+                        </p>
+                        <pre><code id="code-7" class="language-javascript code-block" contenteditable="true" spellcheck="false">// Example 1: Summing all arguments
+function sum(...args) {
+    let total = 0;
+    for (let i = 0; i < args.length; i++) {
+        total += args[i];
+    }
+    return total;
+}
+console.log("sum(1, 2, 3, 4, 5) ->", sum(1, 2, 3, 4, 5));
+console.log("sum(10, 20, 30) ->", sum(10, 20, 30));
+
+// Example 2: Separating named arguments from the rest
+function myFun(a, b, ...otherArgs) {
+    console.log("--- Calling myFun(2, 3, 'four', 5, [6, 7], 'eight') ---");
+    console.log("a:", a);
+    console.log("b:", b);
+    console.log("Other args (as an array):", otherArgs);
+}
+myFun(2, 3, "four", 5, [6, 7], "eight");
+
+// Example 3: If you don't provide more than two args, the rest parameter is an empty array
+function myFun2(a, b, ...otherArgs) {
+    console.log("--- Calling myFun2(5, 6) ---");
+    console.log("a:", a);
+    console.log("b:", b);
+    console.log("Other args (empty array):", otherArgs);
+}
+myFun2(5, 6);
+
+// Example 4: Rest with other data types
+function f(a, b, ...otherArgs) {
+    console.log("--- Calling f(2, 3, 4, [5, 6, 7, 8], 'mofa') ---");
+    console.log(a, b, ...otherArgs); // Spreading the rest array for logging
+}
+f(2, 3, 4, [5, 6, 7, 8], "mofa");</code></pre>
+                        
+                        <div class="info-box">
+                            <p class="font-bold text-slate-700">Restrictions Around the Rest Operator</p>
+                            <ul class="text-slate-600 mt-2 list-disc list-inside space-y-1">
+                                <li>A function definition can only have <strong>one</strong> rest parameter.</li>
+                                <li>The rest parameter must be the <strong>last parameter</strong> in the function definition.</li>
+                                <li>Trailing commas are not allowed after the rest parameter.</li>
+                                <li>The rest parameter cannot have a default value.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="info-box">
+                            <p class="font-bold text-slate-700">Rest vs. The `arguments` Object</p>
+                            <p class="text-slate-600 mt-2">There are four main differences between rest parameters and the older `arguments` object:</p>
+                            <ul class="text-slate-600 mt-2 list-disc list-inside space-y-1">
+                                <li>The `arguments` object is not a real array, while rest parameters are `Array` instances, meaning methods like `sort()`, `map()`, `forEach()` or `pop()` can be applied on it directly.</li>
+                                <li>The `arguments` object has the additional (deprecated) `callee` property.</li>
+                                <li>In a non-strict function with simple parameters, the `arguments` object syncs its indices with the values of parameters. The rest parameter array never updates its value when the named parameters are re-assigned.</li>
+                                <li>The rest parameter bundles all the *extra* parameters into a single array, but does not contain any named argument defined before it. The `arguments` object contains *all* of the parameters bundled into one array-like object.</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-4">
+                            <button onclick="runCode(['code-7'], 'output-4')" class="run-button">Run Code</button>
+                            <div id="output-4" class="output-block"></div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Highlight.js script for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        // --- Navigation Logic ---
+        function showCategory(category) {
+            // Hide all content sections
+            document.querySelectorAll('.content-category').forEach(div => div.classList.add('hidden'));
+            
+            // Remove 'active' class from all nav links
+            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+            
+            // Show the selected content section
+            const contentToShow = document.getElementById('content-' + category);
+            contentToShow.classList.remove('hidden');
+            
+            // Add 'active' class to the clicked nav link
+            document.getElementById('nav-' + category).classList.add('active');
+            
+            // Apply highlighting to all code blocks within the now-visible category
+            contentToShow.querySelectorAll('code.code-block').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        }
+
+        // --- Code Execution Logic ---
+        function runCode(codeIds, outputId) {
+            const outputElement = document.getElementById(outputId);
+            outputElement.innerHTML = '';
+            const oldLog = console.log;
+            const oldError = console.error;
+            
+            console.log = function(...args) {
+                const message = args.map(arg => {
+                    if (typeof arg === 'object' && arg !== null) {
+                        try { return JSON.stringify(arg, null, 2); } catch (e) { return '[Unserializable Object]'; }
+                    }
+                    return String(arg);
+                }).join(' ');
+                const logLine = document.createElement('div');
+                logLine.textContent = message;
+                outputElement.appendChild(logLine);
+                oldLog.apply(console, args);
+            };
+
+            console.error = function(...args) {
+                const message = args.map(String).join(' ');
+                const errorLine = document.createElement('div');
+                errorLine.textContent = message;
+                errorLine.classList.add('error-text');
+                outputElement.appendChild(errorLine);
+                oldError.apply(console, args);
+            };
+
+            codeIds.forEach(id => {
+                // Get content from the contenteditable code block using textContent
+                const code = document.getElementById(id).textContent;
+                try { new Function(code)(); } catch (e) { console.error(e.name + ": " + e.message); }
+            });
+
+            console.log = oldLog;
+            console.error = oldError;
+        }
+
+        // --- Initial setup on page load ---
+        window.addEventListener('load', () => {
+            // Show the first category by default
+            showCategory('basics');
+        });
+    </script>
+
+</body>
+</html>

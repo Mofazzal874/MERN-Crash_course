@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide to JS Destructuring</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Highlight.js CSS for syntax highlighting (atom-one-dark theme) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .code-block {
+            background-color: #282c34; /* atom-one-dark background */
+            color: #abb2bf; /* default text color */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            outline: none; /* remove focus border */
+            min-height: 50px;
+        }
+        .output-block {
+            background-color: #f1f5f9; /* slate-100 */
+            border: 1px solid #e2e8f0; /* slate-200 */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            min-height: 50px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #1e293b;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .run-button {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .run-button:hover {
+            background-color: #1d4ed8; /* blue-700 */
+        }
+        .error-text {
+            color: #dc2626; /* red-600 */
+        }
+        .info-box {
+            background-color: #eef2ff; /* indigo-50 */
+            border-left: 4px solid #4f46e5; /* indigo-600 */
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border-radius: 0.25rem;
+        }
+        .sidebar-link {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            color: #334155; /* slate-700 */
+            transition: background-color 0.2s, color 0.2s;
+            cursor: pointer;
+        }
+        .sidebar-link:hover {
+            background-color: #e2e8f0; /* slate-200 */
+        }
+        .sidebar-link.active {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            font-weight: 600;
+        }
+        /* Highlight.js styles */
+        .hljs-comment,.hljs-quote{color:#5c6370;font-style:italic}.hljs-doctag,.hljs-keyword,.hljs-formula{color:#c678dd}.hljs-section,.hljs-name,.hljs-selector-tag,.hljs-deletion,.hljs-subst{color:#e06c75}.hljs-literal{color:#56b6c2}.hljs-string,.hljs-regexp,.hljs-addition,.hljs-attribute,.hljs-meta .hljs-string{color:#98c379}.hljs-attr,.hljs-variable,.hljs-template-variable,.hljs-type,.hljs-selector-class,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-number{color:#d19a66}.hljs-symbol,.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-title{color:#61aeee}.hljs-built_in,.hljs-title.class_,.hljs-class .hljs-title{color:#e6c07b}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.hljs-link{text-decoration:underline}
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="flex flex-col md:flex-row">
+            <!-- Side Panel -->
+            <aside class="w-full md:w-1/4 bg-slate-100 p-4 border-b md:border-b-0 md:border-r border-slate-200">
+                <h2 class="text-xl font-bold text-slate-800 mb-4">Topics</h2>
+                <nav>
+                    <a id="nav-object" onclick="showCategory('object')" class="sidebar-link">Object Destructuring</a>
+                    <a id="nav-array" onclick="showCategory('array')" class="sidebar-link mt-2">Array Destructuring</a>
+                    <a id="nav-usecase" onclick="showCategory('usecase')" class="sidebar-link mt-2">A Beautiful Use-Case</a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="w-full md:w-3/4 p-6 md:p-8">
+                <!-- Category: Object Destructuring -->
+                <div id="content-object" class="content-category hidden">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-6">Object Destructuring</h1>
+                    <p class="text-slate-600 mb-4">
+                        Destructuring is mostly used to extract values from arrays or properties from objects into distinct variables.
+                    </p>
+                    
+                    <section class="mb-12">
+                        <h2 class="text-2xl font-semibold text-slate-700 border-b pb-2 mb-4">Basic Object Destructuring</h2>
+                        <p class="text-slate-600 mb-4">
+                            If you have a complex object and need to extract multiple properties, destructuring makes your code much cleaner and more readable.
+                        </p>
+                        <pre><code id="code-1" class="language-javascript code-block" contenteditable="true" spellcheck="false">const user = {
+    id: '339',
+    name: "mofa",
+    age: 24,
+};
+
+// Old way:
+// const name = user.name;
+
+// New way with destructuring:
+// As we are destructuring an object, we use curly braces {} on the left.
+// We must use the exact property names.
+const { name, age } = user;
+console.log("Name:", name);
+console.log("Age:", age);</code></pre>
+                    </section>
+
+                    <section class="mb-12">
+                        <h2 class="text-2xl font-semibold text-slate-700 border-b pb-2 mb-4">Renaming Properties</h2>
+                        <p class="text-slate-600 mb-4">
+                            If you want to change the name of the variable while destructuring, you can use a colon `:`.
+                        </p>
+                        <pre><code id="code-2" class="language-javascript code-block" contenteditable="true" spellcheck="false">const user = {
+    id: '339',
+    name: "mofa",
+    age: 24,
+};
+
+// Here we're destructuring 'name' and assigning it to a new variable 'title'.
+const { name: title } = user;
+console.log("Title:", title);
+
+// You can combine renaming with extracting other properties.
+const { id: serial, age } = user;
+console.log("Serial:", serial);
+console.log("Age:", age);</code></pre>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-semibold text-slate-700 border-b pb-2 mb-4">Nested Objects & Default Values</h2>
+                        <p class="text-slate-600 mb-4">
+                            You can destructure nested objects in a single line. This is also where default values become very important, especially when dealing with data from an API that might be missing certain properties.
+                        </p>
+                        <pre><code id="code-3" class="language-javascript code-block" contenteditable="true" spellcheck="false">const user2 = {
+    id: '339',
+    name: "mofa",
+    age: 24,
+    // The address property might not always exist.
+    address: {
+        city: "Dhaka",
+        country: "Bangladesh"
+    }
+};
+
+// Destructuring a nested property
+const { address: { city } } = user2;
+console.log("City:", city);
+
+// What if the address property is missing? It will throw an error.
+// To prevent this, provide a default value.
+const user3 = {
+    id: '340',
+    name: "sakib",
+    age: 25,
+};
+
+// We provide a default empty object for 'address' to prevent an error if it's missing.
+// We also provide a default value for 'country' in case it's missing inside the address object.
+const { address: { country = "Unknown Country" } = {} } = user3;
+console.log("Country from user3:", country);</code></pre>
+                        <div class="mt-4">
+                            <button onclick="runCode(['code-1', 'code-2', 'code-3'], 'output-1')" class="run-button">Run Code</button>
+                            <div id="output-1" class="output-block"></div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Category: Array Destructuring -->
+                <div id="content-array" class="content-category hidden">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-6">Array Destructuring</h1>
+                    <section class="mb-12">
+                        <h2 class="text-2xl font-semibold text-slate-700 border-b pb-2 mb-4">Basic Array Destructuring</h2>
+                        <p class="text-slate-600 mb-4">
+                            You can extract values from an array based on their position. Use commas to skip elements you don't need.
+                        </p>
+                        <pre><code id="code-4" class="language-javascript code-block" contenteditable="true" spellcheck="false">var numbers = [1, 2, 3, 4, 5];
+
+// Extract the first two elements
+var [a, b] = numbers;
+console.log("a, b:", a, b);
+
+// What if you need the 2nd and 5th elements?
+// Use commas to skip elements.
+var [, second, , , fifth] = numbers;
+console.log("second, fifth:", second, fifth);</code></pre>
+                    </section>
+                    
+                    <section class="mb-12">
+                        <h2 class="text-2xl font-semibold text-slate-700 border-b pb-2 mb-4">Nested Arrays and the Rest Operator</h2>
+                        <p class="text-slate-600 mb-4">
+                            Destructuring works on nested arrays too. If you have a very large array, you can use the rest operator (`...`) to collect the remaining elements.
+                        </p>
+                        <pre><code id="code-5" class="language-javascript code-block" contenteditable="true" spellcheck="false">var nestedArray = [1, [2, 3], 4, 5];
+// To extract the '3'
+var [, [, c], ,] = nestedArray;
+console.log("c from nested array:", c);
+
+// Using the rest operator for large arrays
+var arr = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+// Pick the 3rd value and collect the rest
+var [, , d, ...rest] = arr;
+console.log("d:", d);
+console.log("The rest of the elements:", rest);</code></pre>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-semibold text-slate-700 border-b pb-2 mb-4">Default Values in Arrays</h2>
+                        <p class="text-slate-600 mb-4">
+                            You can also set default values in case an array doesn't have an element at a certain position. This is useful when a function or component might return an array of variable length.
+                        </p>
+                        <pre><code id="code-6" class="language-javascript code-block" contenteditable="true" spellcheck="false">var array = [10];
+
+// The array contains only one value, but we are expecting two.
+// We set a default value of 120 for 'f'.
+var [e, f = 120] = array;
+console.log("e:", e);
+console.log("f (with default value):", f);</code></pre>
+                        <div class="mt-4">
+                            <button onclick="runCode(['code-4', 'code-5', 'code-6'], 'output-2')" class="run-button">Run Code</button>
+                            <div id="output-2" class="output-block"></div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Category: Use-Case -->
+                <div id="content-usecase" class="content-category hidden">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-6">A Beautiful Use-Case: Swapping Variables</h1>
+                    <section>
+                        <p class="text-slate-600 mb-4">
+                            One of the most elegant uses of array destructuring is swapping the values of two variables in a single, readable line, without needing a temporary variable.
+                        </p>
+                        <pre><code id="code-7" class="language-javascript code-block" contenteditable="true" spellcheck="false">var a = 1;
+var b = 2;
+console.log("Before swap -> a:", a, "b:", b);
+
+// The Swap!
+[b, a] = [a, b];
+
+console.log("After swap  -> a:", a, "b:", b);</code></pre>
+                        <div class="mt-4">
+                            <button onclick="runCode(['code-7'], 'output-3')" class="run-button">Run Code</button>
+                            <div id="output-3" class="output-block"></div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Highlight.js script for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        function showCategory(category) {
+            document.querySelectorAll('.content-category').forEach(div => div.classList.add('hidden'));
+            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+            const contentToShow = document.getElementById('content-' + category);
+            contentToShow.classList.remove('hidden');
+            document.getElementById('nav-' + category).classList.add('active');
+            contentToShow.querySelectorAll('code.code-block').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        }
+
+        function runCode(codeIds, outputId) {
+            const outputElement = document.getElementById(outputId);
+            outputElement.innerHTML = '';
+            const oldLog = console.log;
+            const oldError = console.error;
+            
+            console.log = function(...args) {
+                const message = args.map(arg => {
+                    if (typeof arg === 'object' && arg !== null) {
+                        try { return JSON.stringify(arg, null, 2); } catch (e) { return '[Unserializable Object]'; }
+                    }
+                    return String(arg);
+                }).join(' ');
+                const logLine = document.createElement('div');
+                logLine.textContent = message;
+                outputElement.appendChild(logLine);
+                oldLog.apply(console, args);
+            };
+
+            console.error = function(...args) {
+                const message = args.map(String).join(' ');
+                const errorLine = document.createElement('div');
+                errorLine.textContent = message;
+                errorLine.classList.add('error-text');
+                outputElement.appendChild(errorLine);
+                oldError.apply(console, args);
+            };
+
+            codeIds.forEach(id => {
+                const code = document.getElementById(id).textContent;
+                try { new Function(code)(); } catch (e) { console.error(e.name + ": " + e.message); }
+            });
+
+            console.log = oldLog;
+            console.error = oldError;
+        }
+
+        window.addEventListener('load', () => showCategory('object'));
+    </script>
+
+</body>
+</html>
