@@ -99,6 +99,7 @@
             <li><a href="#" data-topic="callback-patterns">Callback Patterns</a></li>
             <li><a href="#" data-topic="async-behavior">Asynchronous Behaviour</a></li>
             <li><a href="#" data-topic="promises">Promises</a></li>
+            <li><a href="#" data-topic="async-await">Async/Await</a></li>
         </ul>
     </div>
     <div id="content">
@@ -469,6 +470,126 @@ enroll()
     .catch((err) => {
         console.log(err);
     });
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+        </div>
+
+        <div id="async-await" class="topic-content">
+            <h1>Async/Await</h1>
+            <p>There is another good way of calling (executing) promises using <code>async/await</code>, which are used in combination.</p>
+            <p>The <code>.then()</code> and <code>.catch()</code> chaining can become hefty. We can use <code>async/await</code> to make it more readable and structured.</p>
+            
+            <h2>Where to use Async/Await?</h2>
+            <p>You can use <code>async/await</code> to call a function that returns a promise. If a function returns anything other than a promise, you can't use <code>await</code> with it.</p>
+            <p>When you put the keyword <code>async</code> before a function, it means that the function will always return a promise. Whatever you return from it, JavaScript will recognize it as a promise object.</p>
+            <pre><code>
+async function hello() {
+    return "Hello";
+}
+
+hello().then(console.log); // Logs "Hello"
+console.log(hello()); // Logs a Promise object
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h2>Summary of Async/Await</h2>
+            <ul>
+                <li>If you use <code>async</code> before a function, it will return a promise by default.</li>
+                <li>You must use <code>await</code> with async functions to get the resolved value from the promise. <code>await</code> can only be used inside an <code>async</code> function.</li>
+                <li>The main reason for using <code>async/await</code> is to make asynchronous code look and behave more like synchronous code, so you don't have to use <code>.then()</code> and <code>.catch()</code> methods, making it more readable.</li>
+                <li>Promises were introduced to handle asynchronous operations in a more structured way than callbacks (and to get rid of callback hell), and <code>async/await</code> is syntactic sugar over promises that makes the code look synchronous while still being asynchronous.</li>
+            </ul>
+
+            <h2>Refactoring with Async/Await</h2>
+            <p>Let's make the previous course enrollment code more readable and structured using <code>async/await</code>.</p>
+            <pre><code>
+const paymentSuccess = true; 
+const marks = 70; 
+
+function enroll() {
+    console.log("Enrollment is in progress"); 
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            paymentSuccess ? resolve() : reject("Payment failed"); 
+        }, 1000); 
+    }); 
+}
+
+function progress() {
+    console.log("Course is in progress... "); 
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            marks >= 70 ? resolve() : reject("You couldn't obtain enough marks for certificate"); 
+        }, 2000); 
+    }); 
+}
+
+function getCertificate() {
+    console.log("get certificate is in progress..."); 
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve("Congrats, you've got your certificate!"); 
+        }, 1500); 
+    });
+}
+
+async function course() {
+    await enroll();
+    await progress();
+    const message = await getCertificate();
+    console.log(message);
+}
+
+course();
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+            <p>Here, we are writing the functions similar to synchronous code, but they are still asynchronous. It's much more readable this time.</p>
+
+            <h2>Error Handling with try/catch</h2>
+            <p>There's an issue with the code above. If the <code>enroll</code> or <code>progress</code> function fails, the <code>course</code> function will not complete successfully, and an uncaught error will be thrown. We need to handle these errors properly using a <code>try/catch</code> block.</p>
+            <pre><code>
+const paymentSuccess = false; // Set to false to test error handling
+const marks = 70; 
+
+function enroll() {
+    console.log("Enrollment is in progress"); 
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            paymentSuccess ? resolve() : reject("Payment failed"); 
+        }, 1000); 
+    }); 
+}
+
+function progress() {
+    console.log("Course is in progress... "); 
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            marks >= 70 ? resolve() : reject("You couldn't obtain enough marks for certificate"); 
+        }, 2000); 
+    }); 
+}
+
+function getCertificate() {
+    console.log("get certificate is in progress..."); 
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve("Congrats, you've got your certificate!"); 
+        }, 1500); 
+    });
+}
+
+async function course() {
+    try {
+        await enroll();
+        await progress();
+        const message = await getCertificate();
+        console.log(message);
+    } catch (error) {
+        console.error("Error:", error); // This will handle any error that occurs
+    }
+}
+
+course();
             </code><button class="run-button">Run</button></pre>
             <div class="output"></div>
         </div>
