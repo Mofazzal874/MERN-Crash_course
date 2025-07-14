@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Concepts</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f0f2f5;
+        }
+        #sidebar {
+            width: 250px;
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        #sidebar h2 {
+            margin-top: 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        #sidebar li {
+            margin-bottom: 10px;
+        }
+        #sidebar a {
+            text-decoration: none;
+            color: #007bff;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        #sidebar a:hover, #sidebar a.active {
+            background-color: #e9ecef;
+        }
+        #content {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+        .topic-content {
+            display: none;
+        }
+        .topic-content.active {
+            display: block;
+        }
+        h1 {
+            color: #333;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
+            position: relative;
+        }
+        .run-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .run-button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            background-color: #e9ecef;
+            color: #333;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2>JavaScript Topics</h2>
+        <ul id="menu">
+            <li><a href="#" data-topic="classes">Classes and Inheritance</a></li>
+            <li><a href="#" data-topic="callbacks">Callback Functions</a></li>
+            <li><a href="#" data-topic="callback-patterns">Callback Patterns</a></li>
+            <li><a href="#" data-topic="async-behavior">Asynchronous Behaviour</a></li>
+            <li><a href="#" data-topic="promises">Promises</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <div id="classes" class="topic-content">
+            <h1>Classes and Inheritance</h1>
+            <p>JS classes are not actually OOP classes. ES6 classes are syntactic sugar over prototypes. They are not classes in the traditional sense; they are just a way to create objects with a constructor function and a prototype chain. They do not have private members, static methods, or inheritance in the traditional sense.</p>
+            <p>So: JS classes are actually templates for creating objects. If you don't provide a constructor, it will create an empty constructor function and an empty prototype object. You can add methods to the prototype object, and they will be available to all instances of the class.</p>
+            
+            <h2>Class Definition</h2>
+            <pre><code>
+class Car { 
+    constructor(name, year) {
+        this.name = name; 
+        this.year = year; 
+    }
+}
+
+const bmw = new Car("BMW", 2020);
+console.log(bmw);
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h2>Class Methods</h2>
+            <pre><code>
+class Car2 {
+    constructor(name, year) {
+        this.name = name; 
+        this.year = year; 
+    }
+    getDetails() {
+        return `${this.name} was made in ${this.year}`;
+    }
+    static getClassName() {
+        return "Car2";
+    }
+    getSpeed(speed) {
+        return `${this.name} can go at a speed of ${speed} km/h`;
+    }
+}
+const audi = new Car2("Audi", 2021);
+console.log(audi.getDetails());
+console.log(audi.getSpeed(280));
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h2>Static Methods</h2>
+            <p>You cannot call a static method on an object instance, only on an object class.</p>
+            <pre><code>
+// This is defined in the block above, we need to access it here.
+// For demonstration, let's redefine it or assume it's in scope.
+class Car2 {
+    constructor(name, year) {
+        this.name = name; 
+        this.year = year; 
+    }
+    static getClassName() {
+        return "Car2";
+    }
+}
+console.log(Car2.getClassName()); // Car2
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h2>Inheritance</h2>
+            <pre><code>
+class Vehicle {
+    constructor(name, year) {
+        this.name = name; 
+        this.year = year; 
+    }
+    getDetails() {
+        return `${this.name} was made in ${this.year}`;
+    }
+}
+
+class Car3 extends Vehicle {
+    constructor(name, year, speed) {
+        super(name, year); 
+        this.speed = speed; 
+    }
+
+    getSpeed() {
+        return `${this.name} can go at a speed of ${this.speed} km/h`;
+    }
+}
+const myCar = new Car3("Toyota", 2022, 180);
+console.log(myCar.getDetails());
+console.log(myCar.getSpeed());
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+        </div>
+
+        <div id="callbacks" class="topic-content">
+            <h1>Callback Functions</h1>
+            <p>To understand asynchronous JavaScript, we need to understand how callback functions work. A callback function is a function that is passed as an argument to another function and is executed after the completion of that function.</p>
+            <pre><code>
+function fetchData(callback) { 
+    console.log("Fetching data...");
+    setTimeout(() => {
+        const data = { id: 1, name: 'John Doe' };
+        callback(data); // Call the callback function with the fetched data
+    }, 2000); // Simulate a delay of 2 seconds
+}
+
+function processData(data) {
+    console.log('Processing data:', data);
+}
+
+// Call fetchData and pass processData
+fetchData(processData); // processData will be called after fetchData completes
+// Output after 2 seconds: Processing data: { id: 1, name: 'John Doe' }
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+        </div>
+
+        <div id="callback-patterns" class="topic-content">
+            <h1>Callback Patterns & Callback Hell</h1>
+            <p>Let's imagine a scenario where you are buying a course from Udemy. You want to enroll -> payment system -> progress of the course system -> certificate system. Before seeing the progress, you have to wait for the payment to be successful. If successful, then you can see the progress of the course, else you will not be able to see the progress.</p>
+            <pre><code>
+const paymentSuccess = true; 
+const marks = 80; 
+
+function enroll(callback) {
+    console.log("Enrollment on progress..."); 
+    setTimeout(function() {
+        if (paymentSuccess) {
+            callback();
+        } else {
+            console.log("Payment failed!");
+        }
+    }, 2000); 
+}
+
+function progress(callback) {
+    console.log("Progress ongoing..."); 
+    setTimeout(function() {
+        if (marks >= 80) {
+            callback();
+        } else {
+            console.log("You have not obtained necessary marks to pass");
+        }
+    }, 3000); 
+}
+
+function getCertificate() {
+    console.log("Giving certification to the participant..."); 
+    setTimeout(function() {
+        console.log("Congrats! you got the certificate"); 
+    }, 1000); 
+}
+
+enroll(() => {
+    progress(() => {
+        getCertificate(); 
+    });
+});
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+            <p>There are problems with callback functions, which leads to "Callback Hell". That is why we use Promises or async/await, which is discussed in the next section.</p>
+        </div>
+
+        <div id="async-behavior" class="topic-content">
+            <h1>Asynchronous Behaviour</h1>
+            <p>By default, JavaScript is synchronous and single-threaded. It executes the code line by line, in the order it appears.</p>
+            <pre><code>
+function hello() {
+    console.log("line 2 code"); 
+}
+
+console.log("line 1 code"); 
+hello(); 
+console.log('line 3 code');
+// Output:
+// line 1 code
+// line 2 code
+// line 3 code
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+            <p>But JS can also be asynchronous, which means it can execute code in the background while waiting for other code to finish. This is done using callbacks, promises, and async/await or using asynchronous functions (like setTimeout).</p>
+            <pre><code>
+setTimeout(function() {
+    console.log("line 2 code"); 
+}, 2000); 
+
+console.log("line 1 code");
+console.log('line 3 code');
+// Output:
+// line 1 code
+// line 3 code
+// line 2 code (after 2 seconds)
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+            <p>The <code>setTimeout</code> function is an asynchronous function that takes a callback function and a delay in milliseconds. It doesn't wait for the delay to finish before executing the next line of code but instead, it will execute the callback function after the delay is over.</p>
+            <p>Callback functions are mainly used in asynchronous operations like API calls, event handling, and timers.</p>
+            <h2>Callback Hell vs Promises</h2>
+            <p><b>Callback Hell:</b> Refers to the situation where multiple nested callbacks make the code hard to read and maintain. It often occurs when dealing with multiple asynchronous operations that depend on each other.</p>
+            <pre><code>
+// Example of callback hell:
+// This is a conceptual example and won't run without the function definitions.
+function getUser(id, cb) { console.log(`Getting user ${id}`); setTimeout(() => cb({id: id, email: 'test@test.com'}), 100) }
+function getPosts(id, cb) { console.log(`Getting posts for user ${id}`); setTimeout(() => cb([{id: 1}]), 100) }
+function getComments(id, cb) { console.log(`Getting comments for post ${id}`); setTimeout(() => cb([{id: 1}]), 100) }
+function sendEmail(email, cb) { console.log(`Sending email to ${email}`); setTimeout(() => cb({success: true}), 100) }
+
+getUser(1, function(user) {
+  getPosts(user.id, function(posts) {
+    getComments(posts[0].id, function(comments) {
+      sendEmail(user.email, function(response) {
+        console.log("Email sent!");
+      });
+    });
+  });
+});
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+            <p>This can lead to deeply nested code, making it difficult to read and maintain. To avoid callback hell, we can use Promises and async/await.</p>
+            
+            <h3>Promises</h3>
+            <p>Promises represent a value that may be available now, or in the future, or never. They allow us to chain operations and handle errors more gracefully.</p>
+            <pre><code>
+// Conceptual, won't run without definitions
+function doSomething() { return new Promise(res => { console.log('Doing something...'); setTimeout(() => res('A'), 200) }) }
+function doSomethingElse(res) { return new Promise(r => { console.log('Doing something else with ' + res); setTimeout(() => r('B'), 200) }) }
+function doAnotherThing(res) { return new Promise(r => { console.log('Doing another thing with ' + res); setTimeout(() => r('C'), 200) }) }
+
+doSomething()
+  .then(result => doSomethingElse(result))
+  .then(newResult => doAnotherThing(newResult))
+  .then(finalResult => console.log(finalResult));
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h3>Async/Await (Modern Approach)</h3>
+            <p>Async/await is a syntax that allows us to write asynchronous code in a synchronous style, making it easier to read and understand. It is built on top of Promises.</p>
+            <pre><code>
+// Conceptual, won't run without definitions
+function doSomething() { return new Promise(res => { console.log('Doing something...'); setTimeout(() => res('A'), 200) }) }
+function doSomethingElse(res) { return new Promise(r => { console.log('Doing something else with ' + res); setTimeout(() => r('B'), 200) }) }
+function doAnotherThing(res) { return new Promise(r => { console.log('Doing another thing with ' + res); setTimeout(() => r('C'), 200) }) }
+
+async function process() {
+  const result = await doSomething();
+  const newResult = await doSomethingElse(result);
+  const finalResult = await doAnotherThing(newResult);
+  console.log(finalResult);
+}
+process();
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+            <p>This code is much cleaner and easier to read than the callback hell example.</p>
+        </div>
+
+        <div id="promises" class="topic-content">
+            <h1>Promises</h1>
+            <p>"I Promise a Result!"</p>
+            <ul>
+                <li><b>Producing code:</b> Code that can take some time.</li>
+                <li><b>Consuming code:</b> Code that must wait for the result.</li>
+            </ul>
+            <p>A Promise is an Object that links Producing code and Consuming code.</p>
+            <h2>Promise Syntax</h2>
+            <pre><code>
+let myPromise = new Promise(function(myResolve, myReject) {
+  // "Producing Code" (May take some time)
+  console.log("Promise started...");
+  setTimeout(() => {
+    myResolve("Success!"); // when successful
+  }, 1000);
+});
+
+// "Consuming Code" (Must wait for a fulfilled Promise)
+myPromise.then(
+  function(value) { /* code if successful */ },
+  function(error) { /* code if some error */ }
+);
+            </code></pre>
+            <h2>Promise States & Properties</h2>
+            <p>A JavaScript Promise object can be in one of three states:</p>
+            <ul>
+                <li><b>Pending:</b> initial state, neither fulfilled nor rejected.</li>
+                <li><b>Fulfilled:</b> meaning that the operation was completed successfully.</li>
+                <li><b>Rejected:</b> meaning that the operation failed.</li>
+            </ul>
+            <p>The Promise object supports two properties: <code>state</code> and <code>result</code>.</p>
+            <ul>
+                <li>While a Promise object is "pending" (working), the result is <code>undefined</code>.</li>
+                <li>When a Promise object is "fulfilled", the result is a value.</li>
+                <li>When a Promise object is "rejected", the result is an error object.</li>
+            </ul>
+            <p><b>Important:</b> You cannot access the Promise properties <code>state</code> and <code>result</code> directly. You must use a Promise method to handle promises.</p>
+            
+            <h2>Why use Promises?</h2>
+            <p>As you've seen in the asynchronous_behaviour.js section, callback hell can easily happen. Promises are used to avoid this.</p>
+            <p>To understand better: A Promise is like making a promise in the real world. You promise something -> if you succeed then do this, if you fail then do that. There are only two outcomes.</p>
+            <p>When defining a promise, you also have to define what will happen in case of "Success" and in case of "Failure". JavaScript by default passes two arguments to the function in a new Promise: <code>resolve</code> and <code>reject</code>. If the operation is successful, you call <code>resolve()</code>. If it fails, you call <code>reject()</code>.</p>
+
+            <h2>Promise Example</h2>
+            <pre><code>
+const status = true; 
+console.log("Task 1");
+
+//promise definition
+const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        if (status) {
+            resolve("Task 2: Promise resolved!");
+        } else {
+            reject("Task 2: Promise rejected!");
+        }
+    }, 1000);
+});
+
+//promise calling
+promise
+    .then((value) => {
+        console.log(value);
+    })
+    .catch((err) => {
+        console.log(err);
+    }); 
+
+console.log("Task 3");
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h2>Solving Callback Hell with Promises</h2>
+            <p>Here is how the course enrollment example from "Callback Patterns" can be improved with Promises.</p>
+            <pre><code>
+const paymentSuccess = true; 
+const marks = 70; 
+
+function enroll() {
+    console.log("Enrollment is in progress"); 
+    const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            paymentSuccess ? resolve() : reject("Payment failed"); 
+        }, 1000); 
+    }); 
+    return promise; 
+}
+
+function progress() {
+    console.log("Course is in progress... "); 
+    const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            marks >= 70 ? resolve() : reject("You couldn't obtain enough marks for certificate"); 
+        }, 2000); 
+    }); 
+    return promise; 
+}
+
+function getCertificate() {
+    console.log("get certificate is in progress..."); 
+    const promise = new Promise((resolve) => {
+        setTimeout(() => {
+            resolve("Congrats, you've got your certificate!"); 
+        }, 1500); 
+    });
+    return promise; 
+}
+
+enroll()
+    .then(progress)
+    .then(getCertificate)
+    .then((value) => {
+        console.log(value); 
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+            </code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuLinks = document.querySelectorAll('#menu a');
+            const topicContents = document.querySelectorAll('.topic-content');
+            const runButtons = document.querySelectorAll('.run-button');
+            // A global object to hold state between code executions if needed
+            window.myApp = {};
+
+            function showTopic(topicId) {
+                topicContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(topicId).classList.add('active');
+
+                menuLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.topic === topicId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const topicId = this.dataset.topic;
+                    showTopic(topicId);
+                });
+            });
+
+            runButtons.forEach(button => {
+                button.addEventListener('click', async function() {
+                    const pre = this.parentElement;
+                    const code = pre.querySelector('code').innerText;
+                    const outputElement = pre.nextElementSibling;
+                    outputElement.innerHTML = ''; // Clear previous output
+
+                    const oldLog = console.log;
+                    const oldError = console.error;
+
+                    const logger = (type) => (...args) => {
+                        const formattedArgs = args.map(arg => {
+                            if (typeof arg === 'object' && arg !== null) {
+                                try {
+                                    return JSON.stringify(arg, null, 2);
+                                } catch (e) {
+                                    return arg.toString();
+                                }
+                            }
+                            return arg;
+                        }).join(' ');
+                        
+                        const p = document.createElement('p');
+                        p.textContent = formattedArgs;
+                        if (type === 'error') {
+                            p.style.color = 'red';
+                        }
+                        outputElement.appendChild(p);
+                        
+                        if (type === 'log') oldLog.apply(console, args);
+                        if (type === 'error') oldError.apply(console, args);
+                    };
+
+                    console.log = logger('log');
+                    console.error = logger('error');
+
+                    try {
+                        // Use an async function to allow top-level await
+                        const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+                        await new AsyncFunction(code)();
+                    } catch (e) {
+                        console.error('Error: ' + e.message);
+                    } finally {
+                        console.log = oldLog;
+                        console.error = oldError;
+                    }
+                });
+            });
+
+            // Show the first topic by default
+            showTopic('classes');
+        });
+    </script>
+</body>
+</html>
