@@ -511,11 +511,9 @@ enroll()
                     const outputElement = pre.nextElementSibling;
                     outputElement.innerHTML = ''; // Clear previous output
 
-                    const oldLog = console.log;
-                    const oldError = console.error;
-
-                    const logger = (type) => (...args) => {
-                        const formattedArgs = args.map(arg => {
+                    const customLogger = (type) => (...args) => {
+                        const p = document.createElement('p');
+                        p.textContent = args.map(arg => {
                             if (typeof arg === 'object' && arg !== null) {
                                 try {
                                     return JSON.stringify(arg, null, 2);
@@ -525,30 +523,26 @@ enroll()
                             }
                             return arg;
                         }).join(' ');
-                        
-                        const p = document.createElement('p');
-                        p.textContent = formattedArgs;
+
                         if (type === 'error') {
                             p.style.color = 'red';
                         }
                         outputElement.appendChild(p);
-                        
-                        if (type === 'log') oldLog.apply(console, args);
-                        if (type === 'error') oldError.apply(console, args);
                     };
 
-                    console.log = logger('log');
-                    console.error = logger('error');
+                    const sandboxedConsole = {
+                        log: customLogger('log'),
+                        error: customLogger('error'),
+                        clear: () => { outputElement.innerHTML = ''; }
+                    };
 
                     try {
-                        // Use an async function to allow top-level await
                         const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
-                        await new AsyncFunction(code)();
+                        // Pass the sandboxed console to the function, so it's available as `console`
+                        const func = new AsyncFunction('console', code);
+                        await func(sandboxedConsole);
                     } catch (e) {
-                        console.error('Error: ' + e.message);
-                    } finally {
-                        console.log = oldLog;
-                        console.error = oldError;
+                        sandboxedConsole.error('Error: ' + e.message);
                     }
                 });
             });
