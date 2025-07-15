@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Foundation of Javascript - Prototypes</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px;
+            background-color: #f4f4f9; 
+            color: #333; 
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .topic-content { 
+            background-color: white; 
+            border-radius: 8px; 
+            padding: 30px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+        }
+        h1, h2, h3 { 
+            color: #1a1a1a; 
+            border-bottom: 2px solid #e0e0e0; 
+            padding-bottom: 10px; 
+            margin-top: 30px; 
+        }
+        h1 { 
+            font-size: 2.5em; 
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h2 { font-size: 1.8em; }
+        h3 { font-size: 1.4em; }
+        p, li { line-height: 1.8; margin-bottom: 15px; }
+        ul { padding-left: 25px; }
+        pre { 
+            background-color: #2d2d2d; 
+            color: #f8f8f2; 
+            padding: 20px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            position: relative;
+            margin: 20px 0;
+        }
+        code { 
+            font-family: "Fira Code", "Courier New", monospace; 
+            font-size: 14px;
+        }
+        .run-button { 
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            padding: 8px 15px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .run-button:hover { background-color: #45a049; }
+        .output { 
+            margin-top: 10px; 
+            padding: 15px; 
+            border-radius: 5px; 
+            background-color: #e7e7e7; 
+            font-family: "Courier New", monospace; 
+            white-space: pre-wrap; 
+            min-height: 20px;
+        }
+        .note { 
+            background-color: #fffbe6; 
+            border-left: 4px solid #ffc107; 
+            padding: 15px; 
+            margin: 20px 0; 
+            border-radius: 4px;
+            font-style: italic;
+        }
+        .important { 
+            background-color: #e8f4fd; 
+            border-left: 4px solid #2196F3; 
+            padding: 15px; 
+            margin: 20px 0; 
+            border-radius: 4px;
+        }
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+        .comment {
+            color: #666;
+            font-style: italic;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Back to Main Menu</a>
+        
+        <div class="topic-content">
+            <h1>The foundation of Javascript</h1>
+            
+            <div class="comment">
+                <p>js is a functional programming language and the function itself is an Object. everything in js is an Object.</p>
+            </div>
+
+            <h2>js object and functions revision:</h2>
+            
+            <h3>you can create an object like this:</h3>
+            <pre><code>const person = {
+    name: "John",
+    age: 30,
+    greet: function(){
+        console.log("Hello, my name is " + this.name);
+    }
+}; 
+
+console.log(person);
+person.greet();</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h3>also you can create an object like this:</h3>
+            <pre><code>const person2 = new Object();
+person2.name = "Jane";
+person2.age = 25;
+person2.greet = function(){
+    console.log("Hello, my name is " + this.name); //this refers to the object from which the function belong to 
+};
+
+console.log(person2);
+person2.greet();</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h3>also you can create a function and then return a object from it:</h3>
+            <pre><code>function Person(name , age){
+    let person = {}
+    person.name = name ; 
+    person.age = age ;
+    
+
+    return person;   //so that means the function is returning an object which means it will create an object when called 
+}
+
+const mofa = Person("Mofa" , 23) ; 
+const shanto = Person("shanto" , 25) ; 
+
+console.log(mofa) ;
+console.log(typeof(mofa)) ;</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <div class="note">
+                <p>now, for a larger application , if we create thousands of objects for thousands of users , it will create memory and performance issues.<br>
+                instead , we can separate the common properties and methods in another object and then we can reference it(reference it not copy it)<br>
+                here eat , sleep and play methods are common</p>
+            </div>
+
+            <h3>Memory optimization approach:</h3>
+            <pre><code>const personMethods = {
+    eat(){
+        console.log("Person is eating..") ;
+    },  
+
+    sleep(){
+        console.log("Person is sleeping") ; 
+    }, 
+    play(){
+        console.log("Person is playing ") ; 
+    }
+}
+
+function Person(name , age){
+    let person = {}
+    person.name = name ; 
+    person.age = age ;
+    person.eat = personMethods.eat ; 
+    person.sleep = personMethods.sleep ; 
+    person.play = personMethods.play ; 
+    
+
+    return person;   //so that means the function is returning an object which means it will create an object when called 
+}
+
+const john = Person("John", 25);
+john.eat();
+john.sleep();</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <div class="note">
+                <p>so now , we are saving memory ny not creating everything everytime we create a new object .</p>
+                <p>there's also another problem with this. if we want to create/add another method in the personMethods object , we have to add it manually in the person object too. which is troublesome also for larger application . so there's another way in js to do this.</p>
+            </div>
+
+            <h2>for explaining this, lets first understand how js create Object(parent object and child object scenario), and how child object reference parent object's properties.</h2>
+
+            <pre><code>const  player = {
+    name: "mofa" , 
+    age: 25 , 
+    country: "bangladesh"
+}
+
+const  batter = Object.create(player) ;  // here we are creatinga an object batter whose parent is player and we are creating this object with the properties of player(parent) object
+
+// Here, if we console log it , we will find that batter object is blank : 
+console.log(batter) ; 
+// but we can access the properties : 
+console.log(batter.name) ; 
+console.log(batter.age) ; 
+// this is happening because - though the batter object is undefined , when we try to access its properties , it shows the properties of parent meaning child is accessing parent's 
+// properties . this is happening because of a feature in js called -"Prototype"</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h3>Prototype introduction:</h3>
+            <div class="note">
+                <p>now in the previous example we can add another method in the personMethods(parent) object and use the Object.create so that we don't have to add manually in the Person object</p>
+            </div>
+
+            <pre><code>const personMethods = {
+    eat(){
+        console.log("Person is eating..") ;
+    },  
+
+    sleep(){
+        console.log("Person is sleeping") ; 
+    }, 
+    play(){
+        console.log("Person is playing ") ; 
+    }, 
+    study(){
+        console.log("Person is studying ") ; 
+    }
+}
+
+// now : 
+
+function Person(name , age){
+    let person  = Object.create(personMethods) ; //or you can use the new Object(). now you don't need to write person.eat = personMethods.eat etc. like that
+    person.name = name ; 
+    person.age = age ; 
+
+    return person; 
+}
+
+const student = Person("Alice", 20);
+student.eat();
+student.study();</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h2>lets now understand what is prototype?</h2>
+            
+            <h3>lets see an example and analyze the output:</h3>
+
+            <pre><code>function test(){
+
+}
+
+console.log(test) ; 
+// output: 
+// ƒ test(){
+// }
+
+// but if we do: 
+console.log(test.prototype); 
+// {}
+// a blank object 
+
+// now , do: 
+console.dir(test) ; //which is simillar like console.log() but advanced.</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <div class="note">
+                <p>now we can see:<br>
+                ƒ test()<br>
+                length: 0<br>
+                name: "test"<br>
+                prototype: {}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;constructor: ƒ test()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;[[Prototype]]: Object<br>
+                arguments: null<br>
+                caller: null<br>
+                [[FunctionLocation]]: 01. prototyping.js:140<br>
+                [[Prototype]]: ƒ ()<br>
+                [[Scopes]]: Scopes[1]</p>
+            </div>
+
+            <div class="important">
+                <p>see the prototype:<br>
+                -> so prototype is a property of a javascript function or object that points to the object(straight cut forward answer)</p>
+            </div>
+
+            <h3>so we can get rid of personMethods object and use the prototype</h3>
+            <div class="comment">now :</div>
+
+            <pre><code>function Person(name , age){
+    let person  = Object.create(Person.prototype) ;
+    person.name = name;
+    person.age = age ; 
+    return person; 
+}
+
+
+Person.prototype = { 
+    eat(){
+        console.log("Person is eating..") ;
+    },  
+
+    sleep(){
+        console.log("Person is sleeping") ; 
+    }, 
+    play(){
+        console.log("Person is playing ") ; 
+    }, 
+    study(){
+        console.log("Person is studying ") ; 
+    }
+}
+
+const alex = Person("Alex", 22);
+alex.eat();
+alex.study();</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <div class="note">now we don't have to depend on any third object.</div>
+
+            <h2>so to take out some information about prototype:</h2>
+            <ul>
+                <li>js is a prototype based language. it doesn't inherit in a traditional way like inheriting from another class(we can do that too) , it takes prototype of other classes or same classes.</li>
+                <li>prototype is a built-in property of every js object. And everything in js is object . so every object in js has prototype property.</li>
+                <li>so when we inherit in js ,the child object just inherit everything in the prototype object. prototype helps js in inheriting.</li>
+            </ul>
+
+            <h2>Constructor function :</h2>
+
+            <pre><code>function Person(name , age){
+    let person  = Object.create(Person.prototype) ;
+    person.name = name;
+    person.age = age ; 
+    return person; 
+}
+
+const person1 = Person("Bob", 30);
+console.log(person1);</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <div class="comment">
+                <p>this function is also called constructor function as we are creating mofa , shanto etc object with this function.</p>
+                <p>note:<br>
+                - every function in js is by default constructor function, as we can create objects with that function if we want.</p>
+            </div>
+
+            <h2>'new' & 'this' keyword in javascript:</h2>
+
+            <pre><code>const hudai = new Person('hudai' , 25) ; 
+console.log(hudai);</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <h3>whats the benefit of using new keyword? (same thing but different)</h3>
+            <div class="note">
+                <p>- when we use the 'new' keyword , then we don't need to write like this -</p>
+                <pre style="background: #f8f9fa; color: #333; padding: 10px; border-radius: 4px;">
+// let person  = Object.create(Person.prototype) 
+
+// and  
+    return person;</pre>
+                <p>- js replace this with 'this' keyword.</p>
+            </div>
+
+            <pre><code>function Person(name , age){ 
+    this.name = name ; 
+    this.age = age ; 
+
+}
+
+Person.prototype.greet = function(){
+    console.log("Hello, I'm " + this.name + " and I'm " + this.age + " years old");
+};
+
+const person1 = new Person("Bob", 30);
+person1.greet();
+console.log(person1);</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <div class="note">
+                <p>- so you don't have to worry about anything. all you have to do is just assign properties. This is used highly in React.</p>
+            </div>
+
+            <h3>but you can also do it like traditional language with 'class' keyword(after ES6).</h3>
+
+            <pre><code>class Person{
+    constructor(name , age){
+        this.name = name ; 
+        this.age = age; 
+    }
+
+    eat(){
+        console.log("Person is eating..") ;
+    } 
+    sleep(){
+        console.log("Person is sleeping") ; 
+    } 
+    play(){
+        console.log("Person is playing ") ; 
+    }
+    study(){
+        console.log("Person is studying ") ; 
+    }
+}
+const mofa = new Person("mofa" , 25) ; 
+mofa.play();</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+            <div class="comment">this will work similarly</div>
+
+            <h3>also you can do this for any of the js object :</h3>
+
+            <pre><code>const myArray = new Array(); 
+console.log(Array.prototype) ; 
+
+// you will find a list of all the Array methods that you can apply to.</code><button class="run-button">Run</button></pre>
+            <div class="output"></div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const runButtons = document.querySelectorAll('.run-button');
+
+            runButtons.forEach(button => {
+                button.addEventListener('click', async function() {
+                    const pre = this.parentElement;
+                    const code = pre.querySelector('code').innerText;
+                    const outputElement = pre.nextElementSibling;
+                    outputElement.innerHTML = ''; // Clear previous output
+
+                    const customLogger = (type) => (...args) => {
+                        const p = document.createElement('p');
+                        p.textContent = args.map(arg => {
+                            if (typeof arg === 'object' && arg !== null) {
+                                try {
+                                    return JSON.stringify(arg, null, 2);
+                                } catch (e) {
+                                    return arg.toString();
+                                }
+                            }
+                            return arg;
+                        }).join(' ');
+
+                        if (type === 'error') {
+                            p.style.color = 'red';
+                        }
+                        outputElement.appendChild(p);
+                    };
+
+                    const sandboxedConsole = {
+                        log: customLogger('log'),
+                        error: customLogger('error'),
+                        dir: customLogger('log'), // console.dir acts like console.log in our sandbox
+                        clear: () => { outputElement.innerHTML = ''; }
+                    };
+
+                    try {
+                        const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+                        const func = new AsyncFunction('console', code);
+                        await func(sandboxedConsole);
+                    } catch (e) {
+                        sandboxedConsole.error('Error: ' + e.message);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

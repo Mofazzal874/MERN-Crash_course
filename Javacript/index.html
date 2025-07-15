@@ -100,6 +100,7 @@
             <li><a href="#" data-topic="async-behavior">Asynchronous Behaviour</a></li>
             <li><a href="#" data-topic="promises">Promises</a></li>
             <li><a href="#" data-topic="async-await">Async/Await</a></li>
+            <li><a href="#" data-topic="prototypes">Prototypes in JavaScript</a></li>
         </ul>
     </div>
     <div id="content">
@@ -592,7 +593,7 @@ async function course() {
 course();
             </code><button class="run-button">Run</button></pre>
             <div class="output"></div>
-        </div>
+        </div>    
     </div>
 
     <script>
@@ -604,6 +605,12 @@ course();
             window.myApp = {};
 
             function showTopic(topicId) {
+                if (topicId === 'prototypes') {
+                    // Load external prototype.html file
+                    loadPrototypeFile();
+                    return;
+                }
+                
                 topicContents.forEach(content => {
                     content.classList.remove('active');
                 });
@@ -615,6 +622,24 @@ course();
                         link.classList.add('active');
                     }
                 });
+            }
+
+            function loadPrototypeFile() {
+                // Hide all current topic contents
+                topicContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Update menu active state
+                menuLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.topic === 'prototypes') {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Redirect to prototype.html
+                window.location.href = 'prototype.html';
             }
 
             menuLinks.forEach(link => {
