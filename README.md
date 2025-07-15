@@ -1,4 +1,4 @@
-# MERN Stack Crash Course 🚀
+# MERN Stack Crash Course
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-MERN--Crash__course-blue?style=flat-square&logo=github)](https://github.com/Mofazzal874/MERN-Crash_course)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Render-green?style=flat-square)](https://product-store-mern-3ld6.onrender.com)
