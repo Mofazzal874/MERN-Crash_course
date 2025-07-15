@@ -1,0 +1,19 @@
+prereq. of learning react
+
+
+JS----
+Basic syntax(array methods , loop )
+
+
+Modern JS-------
+learn with sumit Modern js playlist
+
+
+
+React fundamentals----
+Think in a react way playlist(3 videos-2 videos is done)  --linting is not done
+
+
+
+
+\\wsl.localhost

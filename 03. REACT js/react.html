@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+    <!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+   <!-- react library will generate the html for us -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script> 
+  <!-- react dom will render it to DOM(render it in root html div er moddhe..and then all you have to do is write vanilla js code) -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- Babel transpiler -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- add type="text/babel" in which js script uses the babel transpiler(here it is increment.js) -->
+  <!-- Load our React component. -->
+  <!-- have to include this js after including the react libraries -->
+  <script type="text/babel" src="./increment.js"></script> 
+</body>
+</html>

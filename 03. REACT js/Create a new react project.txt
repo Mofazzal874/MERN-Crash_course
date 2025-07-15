@@ -1,0 +1,84 @@
+open cmd where you want to create a new project
+
+npm create vite@latest
+ give name of the project
+
+select react from the list
+then select javascript + SWC (+swc for faster bundling ) .you can also select only javascript .But +swc is better for faster bundling 
+
+then go to the project folder and run->
+
+
+npm install or npm i
+
+cleanup project folder structure:
+i.delete public , src/assets , src/App.css and src/index.css
+ii. go to src/main.jsx and delete the line containing , "import './index.css'(4th line)
+iii.go to src/App.jsx and remove all codes there.Then create a component called App with any text 
+iv. then cmd-> npm run dev
+
+ 
+
+notes on react js project:
+app.jsx and main.jsx are the main components file
+package.json -heart of the projects , contains all the dependencies that are needed to run the project
+
+
+
+
+How react components works?
+->React components are functions...(the first letter will be uppercase always)
+->in any .jsx file you have to create individual components and then export them for UI to be rendered..(for ex- App.jsx component)
+->These exported component will be imported in another file for the rendering process.( main.jsx will import this App.jsx and will render it in index.html root div)
+
+This is called registering a component->
+import React from 'react'
+import Greet from './components/Greet';
+
+
+export const App = () => {
+  return (
+    <div>
+      <Greet/>
+    </div>
+  )
+}
+and this is called Exporting a component->
+export default App ; 
+
+and this is called importing a component->
+import Greet from './components/Greet'
+
+
+and this is called calling a component->
+
+(ex- in the App.jsx file)
+export const App = () => {
+  return (
+    <div>
+      <Greet/>        //Here The Greet component is being called 
+    </div>
+  )
+}
+
+
+
+JSX RULES:
+JSX must return a single parent element.
+JSX elements must be properly closed.
+js codes should be in {} braces.
+JSX attributes are written using camelCase (e.g., className instead of class).
+
+
+
+
+React shortcut:
+
+'rafc' -> will create a boilerplate react arrow function component to any .jsx file 
+
+
+
+
+
+
+
